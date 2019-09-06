@@ -1,7 +1,0 @@
-messages:
-  invalid target: "&c&oInvalid target &a{target}&c&o."
-  freeze: "&3{target} &bis now frozen and cannot move."
-  un-freeze: "&3{target} &bis no longer frozen."
-  action bar:
-    frozen: "&b&lYou are frozen!"
-    melted: "&c&oYou are no longer frozen."
