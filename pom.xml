@@ -6,7 +6,7 @@
 	
 	<groupId>com.SirBlobman</groupId>
 	<artifactId>freeze</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>Freeze</name>
 	<description>A plugin that prevents players from moving.</description>
 
@@ -65,7 +65,7 @@
 				<configuration>
 					<relocations>
 						<relocation>
-							<pattern>com.Sirblobman.api</pattern>
+							<pattern>com.SirBlobman.api</pattern>
 							<shadedPattern>com.SirBlobman.freeze.api</shadedPattern>
 						</relocation>
 					</relocations>
