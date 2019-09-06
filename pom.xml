@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
+	
+	<groupId>com.SirBlobman</groupId>
+	<artifactId>freeze</artifactId>
+	<version>1.0.0</version>
+	<name>Freeze</name>
+	<description>A plugin that prevents players from moving.</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
+
+		<bukkit.version>1.8-R0.1-SNAPSHOT</bukkit.version>
+
+		<bukkit.plugin.name>Freeze</bukkit.plugin.name>
+		<bukkit.plugin.prefix>Freeze</bukkit.plugin.prefix>
+		<bukkit.plugin.description>${project.description}</bukkit.plugin.description>
+		<bukkit.plugin.main>com.SirBlobman.freeze.Freeze</bukkit.plugin.main>
+		<bukkit.plugin.version>${project.version}</bukkit.plugin.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>hub-spigotmc-org</id>
+			<name>Spigot and Bukkit</name>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- SirBlobman API -->
+		<dependency>
+			<groupId>com.SirBlobman.api</groupId>
+			<artifactId>SirBlobmanAPI</artifactId>
+			<version>1.8</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Spigot API -->
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot-api</artifactId>
+			<version>${bukkit.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<relocations>
+						<relocation>
+							<pattern>com.Sirblobman.api</pattern>
+							<shadedPattern>com.SirBlobman.freeze.api</shadedPattern>
+						</relocation>
+					</relocations>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
