@@ -4,25 +4,30 @@
 [SIZE=5][COLOR=#FF0000][B]Description:[/B][/COLOR][/SIZE]
 Freeze is a simple plugin that allows you to freeze players. Frozen players cannot move, teleport, or execute commands.
 
+[SIZE=5][COLOR=#FF0000][B]Dependencies:[/B][/COLOR][/SIZE]
+[LIST]
+[*][URL='https://www.spigotmc.org/resources/83189/']SirBlobmanCore[/URL]
+[/LIST]
+
 [SIZE=5][COLOR=#FF0000][B]Features:[/B][/COLOR][/SIZE]
 [LIST]
-[*] Freeze players
-[*] Configuration option to prevent players from moving while frozen
-[*] Configuration option to prevent players from teleporting while frozen
-[*] Configuration option to prevent players from executing commands while frozen
+[*]Freeze players
+[*]Configuration option to prevent players from moving while frozen
+[*]Configuration option to prevent players from teleporting while frozen
+[*]Configuration option to prevent players from executing commands while frozen
 [/LIST]
 
 [SIZE=5][COLOR=#FF0000][B]Commands:[/B][/COLOR][/SIZE]
 [LIST]
-[*] [B]/freeze <player>[/B]: Freeze or unfreeze a player.
-[*] [B]/freeze reload[/B]: Reload the configuration files of this plugin.
+[*][B]/freeze <player>[/B]: Freeze or unfreeze a player.
+[*][B]/freeze reload[/B]: Reload the configuration files of this plugin.
 [/LIST]
 
 [SIZE=5][COLOR=#FF0000][B]Permissions:[/B][/COLOR][/SIZE]
 [LIST]
-[*] [B]freeze.freeze[/B]: Access the '/freeze' command.
-[*] [B]freeze.reload[/B]: Access the '/freeze reload' command.
-[*] [B]freeze.immune[/B]: Prevent a player from being frozen (not given to OPs by default)
+[*][B]freeze.freeze[/B]: Access the '/freeze' command.
+[*][B]freeze.reload[/B]: Access the '/freeze reload' command.
+[*][B]freeze.immune[/B]: Prevent a player from being frozen (not given to OPs by default)
 [/LIST]
 
 [SIZE=5][B][COLOR=#FF0000]Help and Support:[/COLOR][/B][/SIZE]
