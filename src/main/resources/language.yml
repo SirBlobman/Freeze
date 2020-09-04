@@ -1,0 +1,4 @@
+# This is the default language that will be used if a player's
+# locale cannot be detected or if a file does not exist for their locale.
+# This is also used on versions below 1.12.2 that don't have per-player-locale
+default-locale: "en_us"

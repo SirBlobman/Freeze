@@ -1,7 +1,26 @@
-messages:
-  invalid target: "&c&oInvalid target &a{target}&c&o."
-  freeze: "&3{target} &bis now frozen and cannot move."
-  un-freeze: "&3{target} &bis no longer frozen."
-  action bar:
-    frozen: "&b&lYou are frozen!"
-    melted: "&c&oYou are no longer frozen."
+# Should the plugin be allowed to check for updates?
+update-checker: true
+
+# Should players be prevented from moving while frozen?
+prevent-movement: true
+
+# Should players be prevented from teleporting while frozen?
+prevent-teleport: true
+
+# Should players be prevented from executing commands while frozen?
+prevent-commands: true
+
+# This is a list of commands that will be prevented
+# This list uses the String.startsWith method
+# This means that blocking '/tp' will also block '/tpa' and '/tpo'
+blocked-command-list:
+  - "/tp"
+  - "/spawn"
+  - "/home"
+
+# This is a list of commands that will be allowed
+# Only add commands here if they are accidentally blocked
+# Example: block `/tpa` but allow `/tpahere`
+# This list also uses String.startsWith
+allowed-command-list:
+  - "/tpahere"

@@ -1,100 +1,85 @@
 package com.SirBlobman.freeze.command;
 
-import com.SirBlobman.api.nms.NMS_Handler;
-import com.SirBlobman.freeze.Freeze;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
-public class CommandFreeze implements CommandExecutor, Listener {
-    private static final List<UUID> frozenList = new ArrayList<>();
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-    private final Freeze plugin;
-    public CommandFreeze(Freeze plugin) {
+import com.SirBlobman.api.command.Command;
+import com.SirBlobman.api.language.LanguageManager;
+import com.SirBlobman.api.language.Replacer;
+import com.SirBlobman.api.nms.MultiVersionHandler;
+import com.SirBlobman.api.nms.PlayerHandler;
+import com.SirBlobman.freeze.FreezePlugin;
+import com.SirBlobman.freeze.manager.FreezeManager;
+
+public final class CommandFreeze extends Command {
+    private final FreezePlugin plugin;
+    public CommandFreeze(FreezePlugin plugin) {
+        super(plugin, "freeze");
         this.plugin = plugin;
     }
 
-    private String color(String message) {
-        if(message == null) return null;
-        return ChatColor.translateAlternateColorCodes('&', message);
-    }
-
-    private String getConfigMessage(String path) {
-        FileConfiguration config = this.plugin.getConfig();
-        if(config.isList(path)) {
-            List<String> messageList = config.getStringList(path);
-            String[] messageArray = messageList.toArray(new String[0]);
-
-            String message = String.join("\n", messageArray);
-            return color(message);
-        }
-
-        if(config.isString(path)) {
-            String message = config.getString(path);
-            return color(message);
-        }
-
-        return path;
+    @Override
+    public LanguageManager getLanguageManager() {
+        return this.plugin.getLanguageManager();
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, String[] args) {
+        if(args.length == 1) {
+            Set<String> valueSet = getOnlinePlayerNames();
+            if(sender.hasPermission("freeze.reload")) valueSet.add("reload");
+            return getMatching(valueSet, args[0]);
+        }
+
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean execute(CommandSender sender, String[] args) {
         if(args.length < 1) return false;
 
-        String targetName = args[0].toLowerCase();
-        Player target = Bukkit.getPlayer(targetName);
-        if(target == null) {
-            String message = getConfigMessage("messages.invalid target").replace("{target}", targetName);
-            sender.sendMessage(message);
+        String sub = args[0].toLowerCase();
+        if(sub.equals("reload") && sender.hasPermission("freeze.reload")) {
+            this.plugin.reloadConfig();
+            sendMessageOrDefault(sender, "reload-success", "", null, true);
             return true;
         }
-        targetName = target.getName();
 
-        UUID uuid = target.getUniqueId();
-        if(frozenList.contains(uuid)) {
-            frozenList.remove(uuid);
-            String message = getConfigMessage("messages.un-freeze").replace("{target}", targetName);
-            sender.sendMessage(message);
+        Player target = findTarget(sender, args[0]);
+        if(target == null) return true;
 
+        String targetName = target.getName();
+        Replacer targetReplacer = message -> message.replace("{target}", targetName);
+
+        FreezeManager freezeManager = this.plugin.getFreezeManager();
+        if(freezeManager.isFrozen(target)) {
+            freezeManager.setFrozen(target, false);
+            sendMessageOrDefault(sender, "unfreeze", "", targetReplacer, true);
             sendUnfrozenMessage(target);
-            return true;
+        } else {
+            if(target.hasPermission("freeze.immune")) {
+                sendMessageOrDefault(sender, "error.player-immune", "", targetReplacer, true);
+                return true;
+            }
+
+            freezeManager.setFrozen(target, true);
+            sendMessageOrDefault(sender, "freeze", "", targetReplacer, true);
         }
 
-        frozenList.add(uuid);
-        String message = getConfigMessage("messages.freeze").replace("{target}", targetName);
-        sender.sendMessage(message);
         return true;
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-    public void onMove(PlayerMoveEvent e) {
-        Player player = e.getPlayer();
-        UUID uuid = player.getUniqueId();
-        if(!frozenList.contains(uuid)) return;
-
-        e.setCancelled(true);
-        sendFrozenMessage(player);
-    }
-
-    private void sendFrozenMessage(Player player) {
-        String message = getConfigMessage("messages.action bar.frozen");
-        NMS_Handler.getHandler().sendActionBar(player, message);
-    }
-
     private void sendUnfrozenMessage(Player player) {
-        String message = getConfigMessage("messages.action bar.melted");
-        NMS_Handler.getHandler().sendActionBar(player, message);
+        LanguageManager languageManager = getLanguageManager();
+        String message = languageManager.getMessageColored(player, "action-bar.melted");
+        if(message.isEmpty()) return;
+
+        MultiVersionHandler multiVersionHandler = this.plugin.getMultiVersionHandler();
+        PlayerHandler playerHandler = multiVersionHandler.getPlayerHandler();
+        playerHandler.sendActionBar(player, message);
     }
 }

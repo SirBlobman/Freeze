@@ -1,0 +1,11 @@
+error:
+  invalid-target: "&7{target}&c is not online or does not exist."
+  player-immune: "&7{target}&c is immune to cold weather."
+
+action-bar:
+  frozen: "&b&lYou are frozen!"
+  melted: "&aYou are no longer frozen."
+
+freeze: "&7{target}&b is now frozen."
+unfreeze: "&7{target}&b is no longer frozen."
+reload-success: "&aSuccessfully reloaded the configuration files."

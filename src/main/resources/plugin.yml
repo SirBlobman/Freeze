@@ -1,14 +1,45 @@
 name: "${bukkit.plugin.name}"
 prefix: "${bukkit.plugin.prefix}"
 description: "${bukkit.plugin.description}"
-author: "SirBlobman"
+website: "${bukkit.plugin.website}"
 
 main: "${bukkit.plugin.main}"
 version: "${bukkit.plugin.version}"
+api-version: "1.13"
+
+authors:
+  - "${bukkit.plugin.author}"
+
+depend:
+  - "SirBlobmanCore"
 
 commands:
   freeze:
-    description: "Freeze or unfreeze a player."
+    description: "Freeze a player."
+    permission: "freeze.freeze"
     usage: "/<command> <player>"
-    permission: "freeze.command.freeze"
-    aliases: [glue, paralyze]
+    aliases:
+      - "glue"
+      - "paralyze"
+      - "ice"
+
+permissions:
+  freeze.*:
+    description: "Access to all other freeze permissions."
+    default: false
+    children:
+      freeze.freeze: true
+      freeze.reload: true
+      freeze.immune: true
+
+  freeze.freeze:
+    description: "Access to the '/freeze' command."
+    default: op
+
+  freeze.reload:
+    description: "Access to the '/freeze reload' command."
+    default: op
+
+  freeze.immune:
+    description: "Make a player immune to being frozen."
+    default: false
