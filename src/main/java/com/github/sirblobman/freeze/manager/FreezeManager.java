@@ -1,4 +1,4 @@
-package com.SirBlobman.freeze.manager;
+package com.github.sirblobman.freeze.manager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import com.SirBlobman.api.utility.Validate;
-import com.SirBlobman.freeze.FreezePlugin;
+import com.github.sirblobman.api.utility.Validate;
+import com.github.sirblobman.freeze.FreezePlugin;
 
 public final class FreezeManager {
     private final FreezePlugin plugin;

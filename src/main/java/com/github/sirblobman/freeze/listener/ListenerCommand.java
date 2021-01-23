@@ -1,4 +1,4 @@
-package com.SirBlobman.freeze.listener;
+package com.github.sirblobman.freeze.listener;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import com.SirBlobman.api.configuration.ConfigurationManager;
-import com.SirBlobman.freeze.FreezePlugin;
-import com.SirBlobman.freeze.manager.FreezeManager;
+import com.github.sirblobman.api.configuration.ConfigurationManager;
+import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.manager.FreezeManager;
 
 public final class ListenerCommand extends FreezeListener {
     public ListenerCommand(FreezePlugin plugin) {

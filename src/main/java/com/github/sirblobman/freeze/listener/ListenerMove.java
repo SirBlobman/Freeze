@@ -1,4 +1,4 @@
-package com.SirBlobman.freeze.listener;
+package com.github.sirblobman.freeze.listener;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -7,9 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.SirBlobman.api.configuration.ConfigurationManager;
-import com.SirBlobman.freeze.FreezePlugin;
-import com.SirBlobman.freeze.manager.FreezeManager;
+import com.github.sirblobman.api.configuration.ConfigurationManager;
+import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.manager.FreezeManager;
 
 public final class ListenerMove extends FreezeListener {
     public ListenerMove(FreezePlugin plugin) {

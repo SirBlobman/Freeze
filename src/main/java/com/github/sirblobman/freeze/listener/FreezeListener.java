@@ -1,14 +1,14 @@
-package com.SirBlobman.freeze.listener;
+package com.github.sirblobman.freeze.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import com.SirBlobman.api.language.LanguageManager;
-import com.SirBlobman.api.nms.MultiVersionHandler;
-import com.SirBlobman.api.nms.PlayerHandler;
-import com.SirBlobman.api.utility.Validate;
-import com.SirBlobman.freeze.FreezePlugin;
-import com.SirBlobman.freeze.manager.FreezeManager;
+import com.github.sirblobman.api.language.LanguageManager;
+import com.github.sirblobman.api.nms.MultiVersionHandler;
+import com.github.sirblobman.api.nms.PlayerHandler;
+import com.github.sirblobman.api.utility.Validate;
+import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.manager.FreezeManager;
 
 public abstract class FreezeListener implements Listener {
     private final FreezePlugin plugin;
