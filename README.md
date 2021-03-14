@@ -6,11 +6,13 @@ A simple plugin that allows you to stop players from moving and executing comman
 This plugin is hosted by CodeMC.  
 Maven Details:
 ```xml
+<!-- SirBlobman Public Repository -->
 <repository>
-    <id>codemc-public</id>
-    <url>https://repo.codemc.io/repository/maven-public/</url>
+    <id>sirblobman-public</id>
+    <url>https://nexus.sirblobman.xyz/repository/public/</url>
 </repository>
 
+<-- Freeze -->
 <dependency>
     <groupId>com.github.sirblobman</groupId>
     <artifactId>freeze</artifactId>
