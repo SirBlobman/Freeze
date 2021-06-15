@@ -1,6 +1,3 @@
-# Should the plugin be allowed to check for updates?
-update-checker: true
-
 # Should players be prevented from moving while frozen?
 prevent-movement: true
 

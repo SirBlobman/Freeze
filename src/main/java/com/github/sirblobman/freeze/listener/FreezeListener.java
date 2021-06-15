@@ -1,23 +1,17 @@
 package com.github.sirblobman.freeze.listener;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
+import com.github.sirblobman.api.core.listener.PluginListener;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.nms.MultiVersionHandler;
 import com.github.sirblobman.api.nms.PlayerHandler;
-import com.github.sirblobman.api.utility.Validate;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
-public abstract class FreezeListener implements Listener {
-    private final FreezePlugin plugin;
+public abstract class FreezeListener extends PluginListener<FreezePlugin> {
     public FreezeListener(FreezePlugin plugin) {
-        this.plugin = Validate.notNull(plugin, "plugin must not be null!");
-    }
-
-    protected final FreezePlugin getPlugin() {
-        return this.plugin;
+        super(plugin);
     }
 
     protected final FreezeManager getFreezeManager() {
@@ -28,7 +22,7 @@ public abstract class FreezeListener implements Listener {
     protected final void sendFrozenMessage(Player player) {
         FreezePlugin plugin = getPlugin();
         LanguageManager languageManager = plugin.getLanguageManager();
-        String message = languageManager.getMessageColored(player, "action-bar.frozen");
+        String message = languageManager.getMessage(player, "action-bar.frozen", null, true);
         if(message.isEmpty()) return;
 
         MultiVersionHandler multiVersionHandler = plugin.getMultiVersionHandler();

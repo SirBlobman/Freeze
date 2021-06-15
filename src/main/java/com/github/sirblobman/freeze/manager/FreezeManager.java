@@ -12,6 +12,7 @@ import com.github.sirblobman.freeze.FreezePlugin;
 public final class FreezeManager {
     private final FreezePlugin plugin;
     private final Set<UUID> frozenPlayerSet;
+
     public FreezeManager(FreezePlugin plugin) {
         this.plugin = Validate.notNull(plugin, "plugin must not be null!");
         this.frozenPlayerSet = new HashSet<>();

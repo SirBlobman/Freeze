@@ -8,12 +8,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.sirblobman.api.command.Command;
+import com.github.sirblobman.api.configuration.ConfigurationManager;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.language.Replacer;
 import com.github.sirblobman.api.nms.MultiVersionHandler;
 import com.github.sirblobman.api.nms.PlayerHandler;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
+
+import org.jetbrains.annotations.NotNull;
 
 public final class CommandFreeze extends Command {
     private final FreezePlugin plugin;
@@ -22,6 +25,7 @@ public final class CommandFreeze extends Command {
         this.plugin = plugin;
     }
 
+    @NotNull
     @Override
     public LanguageManager getLanguageManager() {
         return this.plugin.getLanguageManager();
@@ -44,7 +48,13 @@ public final class CommandFreeze extends Command {
 
         String sub = args[0].toLowerCase();
         if(sub.equals("reload") && sender.hasPermission("freeze.reload")) {
-            this.plugin.reloadConfig();
+            ConfigurationManager configurationManager = this.plugin.getConfigurationManager();
+            configurationManager.reload("config.yml");
+            configurationManager.reload("language.yml");
+
+            LanguageManager languageManager = getLanguageManager();
+            languageManager.reloadLanguages();
+
             sendMessageOrDefault(sender, "reload-success", "", null, true);
             return true;
         }
@@ -75,7 +85,7 @@ public final class CommandFreeze extends Command {
 
     private void sendUnfrozenMessage(Player player) {
         LanguageManager languageManager = getLanguageManager();
-        String message = languageManager.getMessageColored(player, "action-bar.melted");
+        String message = languageManager.getMessage(player, "action-bar.melted", null, true);
         if(message.isEmpty()) return;
 
         MultiVersionHandler multiVersionHandler = this.plugin.getMultiVersionHandler();

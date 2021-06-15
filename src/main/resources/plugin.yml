@@ -1,14 +1,14 @@
 name: "${bukkit.plugin.name}"
 prefix: "${bukkit.plugin.prefix}"
 description: "${bukkit.plugin.description}"
-website: "${bukkit.plugin.website}"
+website: "${project.url}"
 
 main: "${bukkit.plugin.main}"
 version: "${bukkit.plugin.version}"
 api-version: "1.13"
 
 authors:
-  - "${bukkit.plugin.author}"
+  - "SirBlobman"
 
 depend:
   - "SirBlobmanCore"
