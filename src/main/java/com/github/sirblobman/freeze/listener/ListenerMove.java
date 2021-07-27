@@ -19,9 +19,9 @@ public final class ListenerMove extends FreezeListener {
     @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
     public void onMove(PlayerMoveEvent e) {
         if(isDisabled()) return;
-        FreezeManager freezeManager = getFreezeManager();
 
         Player player = e.getPlayer();
+        FreezeManager freezeManager = getFreezeManager();
         if(!freezeManager.isFrozen(player)) return;
 
         Location fromLocation = e.getFrom();

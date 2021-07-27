@@ -20,9 +20,9 @@ public final class ListenerCommand extends FreezeListener {
     @EventHandler(priority= EventPriority.NORMAL, ignoreCancelled=true)
     public void beforeCommand(PlayerCommandPreprocessEvent e) {
         if(isDisabled()) return;
-        FreezeManager freezeManager = getFreezeManager();
 
         Player player = e.getPlayer();
+        FreezeManager freezeManager = getFreezeManager();
         if(!freezeManager.isFrozen(player)) return;
 
         String commandMessage = e.getMessage();

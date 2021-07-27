@@ -15,7 +15,7 @@ depend:
 
 commands:
   freeze:
-    description: "Freeze a player."
+    description: "Freeze a single player. Immune players will not be frozen."
     permission: "freeze.freeze"
     usage: "/<command> <player>"
     aliases:
@@ -23,11 +23,30 @@ commands:
       - "paralyze"
       - "ice"
 
+  freeze-all:
+    description: "Freeze all players currently on the server. Immune players will not be frozen."
+    permission: "freeze.freeze.all"
+    usage: "/<command>"
+    aliases:
+      - "glue-all"
+      - "paralyze-all"
+      - "ice-all"
+
+  freeze-reload:
+    description: "Reload the configuration files for the Freeze plugin."
+    permission: "freeze.reload"
+    usage: "/<command>"
+    aliases:
+      - "glue-reload"
+      - "paralyze-reload"
+      - "ice-reload"
+
 permissions:
   freeze.*:
     description: "Access to all other freeze permissions."
     default: false
     children:
+      freeze.freeze.all: true
       freeze.freeze: true
       freeze.reload: true
       freeze.immune: true
@@ -36,8 +55,12 @@ permissions:
     description: "Access to the '/freeze' command."
     default: op
 
+  freeze.freeze.all:
+    description: "Access to the '/freeze-all' command."
+    default: op
+
   freeze.reload:
-    description: "Access to the '/freeze reload' command."
+    description: "Access to the '/freeze-reload' command."
     default: op
 
   freeze.immune:

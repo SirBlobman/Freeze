@@ -8,4 +8,5 @@ action-bar:
 
 freeze: "&7{target}&b is now frozen."
 unfreeze: "&7{target}&b is no longer frozen."
+freeze-all: "&bSuccessfully froze &7{amount}&b players."
 reload-success: "&aSuccessfully reloaded the configuration files."

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import com.github.sirblobman.api.configuration.ConfigurationManager;
 import com.github.sirblobman.freeze.FreezePlugin;
@@ -17,11 +18,14 @@ public final class ListenerTeleport extends FreezeListener {
     }
 
     @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
-    public void onMove(PlayerTeleportEvent e) {
+    public void onTeleport(PlayerTeleportEvent e) {
         if(isDisabled()) return;
-        FreezeManager freezeManager = getFreezeManager();
+
+        TeleportCause teleportCause = e.getCause();
+        if(teleportCause == TeleportCause.UNKNOWN) return;
 
         Player player = e.getPlayer();
+        FreezeManager freezeManager = getFreezeManager();
         if(!freezeManager.isFrozen(player)) return;
 
         Location fromLocation = e.getFrom();

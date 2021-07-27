@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.sirblobman.api.command.Command;
-import com.github.sirblobman.api.configuration.ConfigurationManager;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.language.Replacer;
 import com.github.sirblobman.api.nms.MultiVersionHandler;
@@ -20,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class CommandFreeze extends Command {
     private final FreezePlugin plugin;
+
     public CommandFreeze(FreezePlugin plugin) {
         super(plugin, "freeze");
         this.plugin = plugin;
@@ -35,7 +35,6 @@ public final class CommandFreeze extends Command {
     public List<String> onTabComplete(CommandSender sender, String[] args) {
         if(args.length == 1) {
             Set<String> valueSet = getOnlinePlayerNames();
-            if(sender.hasPermission("freeze.reload")) valueSet.add("reload");
             return getMatching(valueSet, args[0]);
         }
 
@@ -45,20 +44,6 @@ public final class CommandFreeze extends Command {
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if(args.length < 1) return false;
-
-        String sub = args[0].toLowerCase();
-        if(sub.equals("reload") && sender.hasPermission("freeze.reload")) {
-            ConfigurationManager configurationManager = this.plugin.getConfigurationManager();
-            configurationManager.reload("config.yml");
-            configurationManager.reload("language.yml");
-
-            LanguageManager languageManager = getLanguageManager();
-            languageManager.reloadLanguages();
-
-            sendMessageOrDefault(sender, "reload-success", "", null, true);
-            return true;
-        }
-
         Player target = findTarget(sender, args[0]);
         if(target == null) return true;
 

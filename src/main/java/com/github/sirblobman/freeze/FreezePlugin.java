@@ -9,6 +9,8 @@ import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.plugin.ConfigurablePlugin;
 import com.github.sirblobman.api.update.UpdateManager;
 import com.github.sirblobman.freeze.command.CommandFreeze;
+import com.github.sirblobman.freeze.command.CommandFreezeAll;
+import com.github.sirblobman.freeze.command.CommandFreezeReload;
 import com.github.sirblobman.freeze.listener.ListenerCommand;
 import com.github.sirblobman.freeze.listener.ListenerMove;
 import com.github.sirblobman.freeze.listener.ListenerTeleport;
@@ -28,17 +30,13 @@ public final class FreezePlugin extends ConfigurablePlugin {
 
         LanguageManager languageManager = getLanguageManager();
         languageManager.saveDefaultLanguages();
+        languageManager.reloadLanguages();
     }
 
     @Override
     public void onEnable() {
-        LanguageManager languageManager = getLanguageManager();
-        languageManager.reloadLanguages();
-
-        new CommandFreeze(this).register();
-        new ListenerMove(this).register();
-        new ListenerTeleport(this).register();
-        new ListenerCommand(this).register();
+        registerCommands();
+        registerListeners();
 
         CorePlugin corePlugin = JavaPlugin.getPlugin(CorePlugin.class);
         UpdateManager updateManager = corePlugin.getUpdateManager();
@@ -55,5 +53,17 @@ public final class FreezePlugin extends ConfigurablePlugin {
 
     public FreezeManager getFreezeManager() {
         return this.freezeManager;
+    }
+
+    private void registerCommands() {
+        new CommandFreeze(this).register();
+        new CommandFreezeAll(this).register();
+        new CommandFreezeReload(this).register();
+    }
+
+    private void registerListeners() {
+        new ListenerMove(this).register();
+        new ListenerTeleport(this).register();
+        new ListenerCommand(this).register();
     }
 }
