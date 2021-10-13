@@ -15,54 +15,56 @@ depend:
 
 commands:
   freeze:
-    description: "Freeze a single player. Immune players will not be frozen."
-    permission: "freeze.freeze"
-    usage: "/<command> <player>"
+    description: "Commands for the Freeze plugin."
+    permission: "freeze.command.freeze"
+    usage: "/<command> help"
     aliases:
       - "glue"
       - "paralyze"
       - "ice"
-
-  freeze-all:
-    description: "Freeze all players currently on the server. Immune players will not be frozen."
-    permission: "freeze.freeze.all"
-    usage: "/<command>"
-    aliases:
-      - "glue-all"
-      - "paralyze-all"
-      - "ice-all"
-
-  freeze-reload:
-    description: "Reload the configuration files for the Freeze plugin."
-    permission: "freeze.reload"
-    usage: "/<command>"
-    aliases:
-      - "glue-reload"
-      - "paralyze-reload"
-      - "ice-reload"
 
 permissions:
   freeze.*:
     description: "Access to all other freeze permissions."
     default: false
     children:
-      freeze.freeze.all: true
-      freeze.freeze: true
-      freeze.reload: true
       freeze.immune: true
-
-  freeze.freeze:
-    description: "Access to the '/freeze' command."
-    default: op
-
-  freeze.freeze.all:
-    description: "Access to the '/freeze-all' command."
-    default: op
-
-  freeze.reload:
-    description: "Access to the '/freeze-reload' command."
-    default: op
+      freeze.command.freeze: true
+      freeze.command.freeze.help: true
+      freeze.command.freeze.reload: true
+      freeze.command.freeze.freeze.player: true
+      freeze.command.freeze.freeze.all: true
+      freeze.command.freeze.melt.player: true
+      freeze.command.freeze.melt.all: true
 
   freeze.immune:
     description: "Make a player immune to being frozen."
     default: false
+
+  freeze.command.freeze:
+    description: "Access to the '/freeze' command."
+    default: op
+
+  freeze.command.freeze.help:
+    description: "Access to the '/freeze help' command."
+    default: op
+
+  freeze.command.freeze.reload:
+    description: "Access to the '/freeze reload' command."
+    default: op
+
+  freeze.command.freeze.freeze.player:
+    description: "Access to the '/freeze freeze player' command."
+    default: op
+
+  freeze.command.freeze.freeze.all:
+    description: "Access to the '/freeze freeze all' command."
+    default: op
+
+  freeze.command.freeze.melt.player:
+    description: "Access to the '/freeze melt player' command."
+    default: op
+
+  freeze.command.freeze.melt.all:
+    description: "Access to the '/freeze melt all' command."
+    default: op

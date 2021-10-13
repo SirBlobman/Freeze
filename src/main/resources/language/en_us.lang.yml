@@ -1,12 +1,30 @@
 error:
   invalid-target: "&7{target}&c is not online or does not exist."
-  player-immune: "&7{target}&c is immune to cold weather."
+  no-permission: "&cYou do not have access to that command."
+  nobody-frozen: "&cThere are no frozen players currently online."
+  not-frozen: "&7{target}&c is not currently frozen."
+  currently-frozen: "&7{target}&c is already frozen."
+  player-immune: "&7{target}&c is immune to ice."
 
 action-bar:
   frozen: "&b&lYou are frozen!"
   melted: "&aYou are no longer frozen."
 
+help:
+  title: "&3&lFreeze Command List:"
+  help: "&b/freeze help&7: View this list of commands."
+  freeze:
+    player: "&b/freeze freeze player <player>&7: Freeze a single, online player."
+    all: "&b/freeze freeze all&7: Freeze all players on the server."
+  melt:
+    player: "&b/freeze melt player <player>&7: Unfreeze a single, online player."
+    all: "&b/freeze freeze all&7: Unfreeze all players on the server."
+  reload: "&b/freeze reload&7: Reload the configuration files."
+
 freeze: "&7{target}&b is now frozen."
 unfreeze: "&7{target}&b is no longer frozen."
 freeze-all: "&bSuccessfully froze &7{amount}&b players."
+freeze-all-failure: "&cThere are no players online or all players are immune."
+unfreeze-all: "&bSuccessfully unfroze &7{amount}&b players."
+unfreeze-all-failure: "&cThere are no frozen players online."
 reload-success: "&aSuccessfully reloaded the configuration files."

@@ -2,8 +2,7 @@
 A simple plugin that allows you to stop players from moving and executing commands.  
 [Spigot Link](https://www.spigotmc.org/resources/31822/)
 
-### Freeze API
-This plugin is hosted by CodeMC.  
+### Freeze API 
 Maven Details:
 ```xml
 <!-- SirBlobman Public Repository -->
@@ -25,7 +24,7 @@ Maven Details:
 #### Check if a player is frozen:
 Make sure that you have Freeze as a dependency and its installed on the server.
 ```java
-public boolean isFrozen(Player player) {
+public boolean isFrozen(Player player){
     FreezePlugin plugin = JavaPlugin.getPlugin(FreezePlugin.class);
     FreezeManager freezeManager = plugin.getFreezeManager();
     return freezeManager.isFrozen(player);

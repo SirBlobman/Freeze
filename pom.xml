@@ -23,16 +23,10 @@
         <bukkit.plugin.description>${project.description}</bukkit.plugin.description>
 
         <bukkit.plugin.main>com.github.sirblobman.freeze.FreezePlugin</bukkit.plugin.main>
-        <bukkit.plugin.version>2.2.1</bukkit.plugin.version>
+        <bukkit.plugin.version>2.2.2</bukkit.plugin.version>
     </properties>
 
     <repositories>
-        <!-- SpigotMC Repository -->
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        
         <!-- SirBlobman Public Repository -->
         <repository>
             <id>sirblobman-public</id>
@@ -45,7 +39,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>21.0.1</version>
+            <version>22.0.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -65,14 +59,14 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    
+
     <distributionManagement>
         <!-- SirBlobman Releases -->
         <repository>
             <id>sb-public-releases</id>
             <url>https://nexus.sirblobman.xyz/repository/public-releases/</url>
         </repository>
-        
+
         <!-- SirBlobman Snapshots -->
         <snapshotRepository>
             <id>sb-public-snapshots</id>

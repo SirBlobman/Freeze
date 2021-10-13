@@ -7,16 +7,27 @@ prevent-teleport: true
 # Should players be prevented from executing commands while frozen?
 prevent-commands: true
 
+# Should players be prevented from breaking and placing blocks while frozen?
+prevent-block-break-and-place: true
+
+# Should players be prevented from taking damage while frozen?
+prevent-damage: true
+
+# Should players be prevented from attacking players and mobs while frozen?
+prevent-attacking: true
+
 # This is a list of commands that will be prevented
 # This list uses the String.startsWith method
 # This means that blocking '/tp' will also block '/tpa' and '/tpo'
+# If the list contains "*", all commands will be blocked.
 blocked-command-list:
   - "/tp"
   - "/spawn"
   - "/home"
 
-# This is a list of commands that will be allowed
-# Only add commands here if they are accidentally blocked
+# This is a list of commands that will be allowed.
+# This list overrides the blocked-command-list.
+# Only add commands here if they are accidentally blocked.
 # Example: block `/tpa` but allow `/tpahere`
 # This list also uses String.startsWith
 allowed-command-list:
