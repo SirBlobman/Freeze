@@ -18,7 +18,7 @@ help:
     all: "&b/freeze freeze all&7: Freeze all players on the server."
   melt:
     player: "&b/freeze melt player <player>&7: Unfreeze a single, online player."
-    all: "&b/freeze freeze all&7: Unfreeze all players on the server."
+    all: "&b/freeze melt all&7: Unfreeze all players on the server."
   reload: "&b/freeze reload&7: Reload the configuration files."
 
 freeze: "&7{target}&b is now frozen."
