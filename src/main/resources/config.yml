@@ -33,8 +33,6 @@ blocked-command-list:
 allowed-command-list:
   - "/tpahere"
 
-
-
 # The fake inventory is a GUI that will be shown to frozen players.
 # Whenever they close the GUI, it will automatically be reopened.
 # The GUI will be removed once the player is no longer frozen.
