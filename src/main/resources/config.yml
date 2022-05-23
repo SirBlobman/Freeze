@@ -32,3 +32,52 @@ blocked-command-list:
 # This list also uses String.startsWith
 allowed-command-list:
   - "/tpahere"
+
+
+
+# The fake inventory is a GUI that will be shown to frozen players.
+# Whenever they close the GUI, it will automatically be reopened.
+# The GUI will be removed once the player is no longer frozen.
+fake-inventory:
+  # Set this to true to enable the fake inventory.
+  enabled: false
+
+  # The title of the GUI
+  # Make sure to say within the character limits for your Minecraft version.
+  title: "&bYou are frozen..."
+
+  # The number of slots in the GUI
+  # Valid values: 5,9,18,27,36,45,54
+  size: 5
+
+  # A map of items that will be in the GUI.
+  # The plugin should prevent these items from being moved/taken.
+  # You can add as many items as you want as long as you have enough GUI slots.
+  items:
+    # 'examplePaper' is the item ID.
+    # IDs currently don't have a use, but they must be unique for each item.
+    examplePaper:
+      # Make sure the slot fits within the inventory size.
+      # Slot numbers start at 0
+      slot: 2
+
+      # Use XMaterial names:
+      # https://github.com/CryptoMorin/XSeries/blob/master/src/main/java/com/cryptomorin/xseries/XMaterial.java
+      material: PAPER
+
+      # This is the amount of the item in the GUI
+      quantity: 1
+
+      # This is the name of the item that is shown to players
+      display-name: "&bYou are frozen."
+
+      # These are extra lines of information added to the item.
+      lore:
+        - "&7Please contact a staff member"
+
+      # Make the item glow (hidden enchantment)
+      glowing: false
+
+      # Custom Model Data is optional, but can be used if you have a custom texture pack.
+      # Custom Model Data requires Spigot 1.14.4 or higher.
+      # custom-model-data: 0

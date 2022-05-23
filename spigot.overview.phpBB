@@ -32,6 +32,7 @@ Frozen players cannot move, teleport, or execute commands.
 [SIZE=5][COLOR=#FF0000][B]Permissions:[/B][/COLOR][/SIZE]
 [LIST]
 [*][B]freeze.immune[/B]: Prevent a player from being frozen (not given to OPs by default).
+[*][B]freeze.command.freeze[/B]: Access the '/freeze' base command.
 [*][B]freeze.command.freeze.help[/B]: Access the '/freeze help' command.
 [*][B]freeze.command.freeze.reload[/B]: Access the '/freeze reload' command.
 [*][B]freeze.command.freeze.freeze.player[/B]: Access the '/freeze freeze player' command.

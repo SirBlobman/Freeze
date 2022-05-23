@@ -12,7 +12,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spigot.version>1.8.8-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.14.4-R0.1-SNAPSHOT</spigot.version>
 
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -23,10 +23,16 @@
         <bukkit.plugin.description>${project.description}</bukkit.plugin.description>
 
         <bukkit.plugin.main>com.github.sirblobman.freeze.FreezePlugin</bukkit.plugin.main>
-        <bukkit.plugin.version>2.2.2</bukkit.plugin.version>
+        <bukkit.plugin.version>2.2.3</bukkit.plugin.version>
     </properties>
 
     <repositories>
+        <!-- SpigotMC Repository -->
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+
         <!-- SirBlobman Public Repository -->
         <repository>
             <id>sirblobman-public</id>
@@ -39,7 +45,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>22.0.0</version>
+            <version>23.0.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -76,7 +82,7 @@
 
     <build>
         <finalName>${bukkit.plugin.name}-${bukkit.plugin.version}</finalName>
-        <defaultGoal>clean install</defaultGoal>
+        <defaultGoal>clean package</defaultGoal>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
