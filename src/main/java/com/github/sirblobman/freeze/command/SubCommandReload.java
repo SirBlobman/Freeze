@@ -4,19 +4,16 @@ import org.bukkit.command.CommandSender;
 
 import com.github.sirblobman.freeze.FreezePlugin;
 
-public final class CommandFreezeReload extends FreezeCommand {
-    public CommandFreezeReload(FreezePlugin plugin) {
+public final class SubCommandReload extends FreezeCommand {
+    public SubCommandReload(FreezePlugin plugin) {
         super(plugin, "reload");
+        setPermissionName("freeze.command.freeze.reload");
     }
     
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
-        if(!checkPermission(sender, "freeze.command.freeze.reload", true)) {
-            return true;
-        }
-        
         FreezePlugin plugin = getFreezePlugin();
-        plugin.onReload();
+        plugin.reloadConfig();
         
         sendMessage(sender, "reload-success", null, true);
         return true;

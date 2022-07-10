@@ -41,12 +41,12 @@ public final class FreezePlugin extends ConfigurablePlugin {
         configurationManager.saveDefault("config.yml");
         
         LanguageManager languageManager = getLanguageManager();
-        languageManager.saveDefaultLanguages();
+        languageManager.saveDefaultLanguageFiles();
     }
     
     @Override
     public void onEnable() {
-        onReload();
+        reloadConfiguration();
         
         registerCommands();
         registerListeners();
@@ -68,14 +68,15 @@ public final class FreezePlugin extends ConfigurablePlugin {
             closeFakeMenu(player);
         }
     }
-    
-    public void onReload() {
+
+    @Override
+    protected void reloadConfiguration() {
         ConfigurationManager configurationManager = getConfigurationManager();
         configurationManager.reload("config.yml");
-        
+
         LanguageManager languageManager = getLanguageManager();
-        languageManager.reloadLanguages();
-        
+        languageManager.reloadLanguageFiles();
+
         FakeMenuManager fakeMenuManager = getFakeMenuManager();
         fakeMenuManager.reload();
     }

@@ -10,17 +10,14 @@ import com.github.sirblobman.api.language.Replacer;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
-public class CommandFreezeFreezeAll extends FreezeCommand {
-    public CommandFreezeFreezeAll(FreezePlugin plugin) {
+public class SubCommandFreezeAll extends FreezeCommand {
+    public SubCommandFreezeAll(FreezePlugin plugin) {
         super(plugin, "all");
+        setPermissionName("freeze.command.freeze.freeze.all");
     }
     
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
-        if(!checkPermission(sender, "freeze.command.freeze.freeze.all", true)) {
-            return true;
-        }
-        
         int freezeCount = freezeAllCount();
         if(freezeCount <= 0) {
             sendMessage(sender, "freeze-all-failure", null, true);

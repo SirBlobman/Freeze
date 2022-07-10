@@ -8,17 +8,14 @@ import org.bukkit.command.CommandSender;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.freeze.FreezePlugin;
 
-public final class CommandFreezeHelp extends FreezeCommand {
-    public CommandFreezeHelp(FreezePlugin plugin) {
+public final class SubCommandHelp extends FreezeCommand {
+    public SubCommandHelp(FreezePlugin plugin) {
         super(plugin, "help");
+        setPermissionName("freeze.command.freeze.help");
     }
     
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
-        if(!checkPermission(sender, "freeze.command.freeze.help", true)) {
-            return true;
-        }
-        
         List<String> messageList = new ArrayList<>();
         addMessage(sender, messageList, "help");
         addMessage(sender, messageList, "reload");

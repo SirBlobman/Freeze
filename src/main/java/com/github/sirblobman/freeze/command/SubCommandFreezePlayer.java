@@ -11,9 +11,10 @@ import com.github.sirblobman.api.language.Replacer;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
-public class CommandFreezeFreezePlayer extends FreezeCommand {
-    public CommandFreezeFreezePlayer(FreezePlugin plugin) {
+public class SubCommandFreezePlayer extends FreezeCommand {
+    public SubCommandFreezePlayer(FreezePlugin plugin) {
         super(plugin, "player");
+        setPermissionName("freeze.command.freeze.freeze.player");
     }
     
     @Override
@@ -28,10 +29,6 @@ public class CommandFreezeFreezePlayer extends FreezeCommand {
     
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
-        if(!checkPermission(sender, "freeze.command.freeze.freeze.player", true)) {
-            return true;
-        }
-        
         if(args.length < 1) {
             return false;
         }

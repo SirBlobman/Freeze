@@ -6,10 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
 import com.github.sirblobman.api.configuration.ConfigurationManager;
-import com.github.sirblobman.api.core.listener.PluginListener;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.nms.MultiVersionHandler;
 import com.github.sirblobman.api.nms.PlayerHandler;
+import com.github.sirblobman.api.plugin.listener.PluginListener;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
