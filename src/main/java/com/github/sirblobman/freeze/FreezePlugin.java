@@ -10,8 +10,11 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.sirblobman.api.bstats.bukkit.Metrics;
+import com.github.sirblobman.api.bstats.charts.SimplePie;
 import com.github.sirblobman.api.configuration.ConfigurationManager;
 import com.github.sirblobman.api.core.CorePlugin;
+import com.github.sirblobman.api.language.Language;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.plugin.ConfigurablePlugin;
 import com.github.sirblobman.api.update.UpdateManager;
@@ -50,10 +53,9 @@ public final class FreezePlugin extends ConfigurablePlugin {
         
         registerCommands();
         registerListeners();
-        
-        CorePlugin corePlugin = JavaPlugin.getPlugin(CorePlugin.class);
-        UpdateManager updateManager = corePlugin.getUpdateManager();
-        updateManager.addResource(this, 31822L);
+
+        registerUpdateChecker();
+        registerbStats();
     }
     
     @Override
@@ -109,5 +111,22 @@ public final class FreezePlugin extends ConfigurablePlugin {
         new ListenerMove(this).register();
         new ListenerTeleport(this).register();
         new ListenerFakeMenu(this).register();
+    }
+
+    private void registerUpdateChecker() {
+        CorePlugin corePlugin = JavaPlugin.getPlugin(CorePlugin.class);
+        UpdateManager updateManager = corePlugin.getUpdateManager();
+        updateManager.addResource(this, 31822L);
+    }
+
+    private void registerbStats() {
+        Metrics metrics = new Metrics(this, 16174);
+        metrics.addCustomChart(new SimplePie("selected_language", this::getDefaultLanguageCode));
+    }
+
+    private String getDefaultLanguageCode() {
+        LanguageManager languageManager = getLanguageManager();
+        Language defaultLanguage = languageManager.getDefaultLanguage();
+        return (defaultLanguage == null ? "none" : defaultLanguage.getLanguageCode());
     }
 }
