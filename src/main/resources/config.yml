@@ -42,7 +42,7 @@ fake-inventory:
 
   # The title of the GUI
   # Make sure to say within the character limits for your Minecraft version.
-  title: "&bYou are frozen..."
+  title: "<aqua>You are frozen...</aqua>"
 
   # The number of slots in the GUI
   # Valid values: 5,9,18,27,36,45,54
