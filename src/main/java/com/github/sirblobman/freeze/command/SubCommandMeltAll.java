@@ -20,13 +20,13 @@ public class SubCommandMeltAll extends FreezeCommand {
     protected boolean execute(CommandSender sender, String[] args) {
         int meltCount = meltAllCount();
         if(meltCount <= 0) {
-            sendMessage(sender, "unfreeze-all-failure", null, true);
+            sendMessage(sender, "unfreeze-all-failure", null);
             return true;
         }
         
         String meltCountString = Integer.toString(meltCount);
         Replacer meltCountReplacer = getReplacer("{amount}", meltCountString);
-        sendMessage(sender, "unfreeze-all", meltCountReplacer, true);
+        sendMessage(sender, "unfreeze-all", meltCountReplacer);
         return true;
     }
     

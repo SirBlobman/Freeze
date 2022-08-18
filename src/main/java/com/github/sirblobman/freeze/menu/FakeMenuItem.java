@@ -1,5 +1,6 @@
 package com.github.sirblobman.freeze.menu;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,10 +11,14 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.sirblobman.api.utility.MessageUtility;
+import com.github.sirblobman.api.adventure.adventure.text.Component;
+import com.github.sirblobman.api.adventure.adventure.text.minimessage.MiniMessage;
+import com.github.sirblobman.api.language.ComponentHelper;
+import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.utility.Validate;
 import com.github.sirblobman.api.utility.VersionUtility;
 import com.github.sirblobman.api.xseries.XMaterial;
+import com.github.sirblobman.freeze.FreezePlugin;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -81,13 +86,16 @@ public final class FakeMenuItem {
     }
     
     @Nullable
-    public String getDisplayNameFormatted() {
+    public String getDisplayNameFormatted(FreezePlugin plugin) {
         String displayName = getDisplayName();
         if(displayName == null) {
             return null;
         }
-        
-        return MessageUtility.color(displayName);
+
+        LanguageManager languageManager = plugin.getLanguageManager();
+        MiniMessage miniMessage = languageManager.getMiniMessage();
+        Component component = miniMessage.deserialize(displayName);
+        return ComponentHelper.toLegacy(component);
     }
     
     public void setDisplayName(@Nullable String displayName) {
@@ -100,13 +108,22 @@ public final class FakeMenuItem {
     }
     
     @Nullable
-    public List<String> getLoreFormatted() {
+    public List<String> getLoreFormatted(FreezePlugin plugin) {
         List<String> lore = getLore();
         if(lore == null) {
             return null;
         }
+
+        LanguageManager languageManager = plugin.getLanguageManager();
+        MiniMessage miniMessage = languageManager.getMiniMessage();
+        List<String> newLore = new ArrayList<>();
+
+        for (String line : lore) {
+            Component component = miniMessage.deserialize(line);
+            newLore.add(ComponentHelper.toLegacy(component));
+        }
         
-        return MessageUtility.colorList(lore);
+        return newLore;
     }
     
     public void setLore(@Nullable List<String> lore) {
@@ -170,7 +187,7 @@ public final class FakeMenuItem {
     }
     
     @NotNull
-    public ItemStack getAsItemStack() {
+    public ItemStack getAsItemStack(FreezePlugin plugin) {
         XMaterial material = getMaterial();
         ItemStack item = material.parseItem();
         if(item == null) {
@@ -185,12 +202,12 @@ public final class FakeMenuItem {
             return item;
         }
         
-        String displayName = getDisplayNameFormatted();
+        String displayName = getDisplayNameFormatted(plugin);
         if(displayName != null) {
             itemMeta.setDisplayName(displayName);
         }
         
-        List<String> lore = getLoreFormatted();
+        List<String> lore = getLoreFormatted(plugin);
         if(lore != null) {
             itemMeta.setLore(lore);
         }

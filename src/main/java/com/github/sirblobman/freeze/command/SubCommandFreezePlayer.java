@@ -42,18 +42,18 @@ public class SubCommandFreezePlayer extends FreezeCommand {
         Replacer targetNameReplacer = getReplacer("{target}", targetName);
         
         if(isImmune(target)) {
-            sendMessage(sender, "error.player-immune", targetNameReplacer, true);
+            sendMessage(sender, "error.player-immune", targetNameReplacer);
             return true;
         }
         
         FreezeManager freezeManager = getFreezeManager();
         if(freezeManager.isFrozen(target)) {
-            sendMessage(sender, "error.currently-frozen", targetNameReplacer, true);
+            sendMessage(sender, "error.currently-frozen", targetNameReplacer);
             return true;
         }
         
         freezeManager.setFrozen(target, true);
-        sendMessage(sender, "freeze", targetNameReplacer, true);
+        sendMessage(sender, "freeze", targetNameReplacer);
         return true;
     }
 }

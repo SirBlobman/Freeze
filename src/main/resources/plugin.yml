@@ -16,7 +16,6 @@ depend:
 commands:
   freeze:
     description: "Commands for the Freeze plugin."
-    permission: "freeze.command.freeze"
     usage: "/<command> help"
     aliases:
       - "glue"

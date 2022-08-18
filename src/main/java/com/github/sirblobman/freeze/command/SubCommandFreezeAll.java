@@ -20,13 +20,13 @@ public class SubCommandFreezeAll extends FreezeCommand {
     protected boolean execute(CommandSender sender, String[] args) {
         int freezeCount = freezeAllCount();
         if(freezeCount <= 0) {
-            sendMessage(sender, "freeze-all-failure", null, true);
+            sendMessage(sender, "freeze-all-failure", null);
             return true;
         }
         
         String freezeCountString = Integer.toString(freezeCount);
         Replacer freezeCountReplacer = getReplacer("{amount}", freezeCountString);
-        sendMessage(sender, "freeze-all", freezeCountReplacer, true);
+        sendMessage(sender, "freeze-all", freezeCountReplacer);
         return true;
     }
     

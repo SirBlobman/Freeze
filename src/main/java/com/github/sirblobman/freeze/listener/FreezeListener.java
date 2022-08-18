@@ -7,8 +7,6 @@ import org.bukkit.event.Cancellable;
 
 import com.github.sirblobman.api.configuration.ConfigurationManager;
 import com.github.sirblobman.api.language.LanguageManager;
-import com.github.sirblobman.api.nms.MultiVersionHandler;
-import com.github.sirblobman.api.nms.PlayerHandler;
 import com.github.sirblobman.api.plugin.listener.PluginListener;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
@@ -33,16 +31,6 @@ public abstract class FreezeListener extends PluginListener<FreezePlugin> {
         return plugin.getLanguageManager();
     }
     
-    protected final MultiVersionHandler getMultiVersionHandler() {
-        FreezePlugin plugin = getPlugin();
-        return plugin.getMultiVersionHandler();
-    }
-    
-    protected final PlayerHandler getPlayerHandler() {
-        MultiVersionHandler multiVersionHandler = getMultiVersionHandler();
-        return multiVersionHandler.getPlayerHandler();
-    }
-    
     protected final YamlConfiguration getConfiguration() {
         ConfigurationManager configurationManager = getConfigurationManager();
         return configurationManager.get("config.yml");
@@ -50,13 +38,7 @@ public abstract class FreezeListener extends PluginListener<FreezePlugin> {
     
     protected final void sendFrozenMessage(Player player) {
         LanguageManager languageManager = getLanguageManager();
-        String message = languageManager.getMessage(player, "action-bar.frozen", null, true);
-        if(message.isEmpty()) {
-            return;
-        }
-        
-        PlayerHandler playerHandler = getPlayerHandler();
-        playerHandler.sendActionBar(player, message);
+        languageManager.sendActionBar(player, "action-bar.frozen", null);
     }
     
     protected final boolean isSimilar(Location location1, Location location2) {

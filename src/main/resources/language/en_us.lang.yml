@@ -1,30 +1,48 @@
+## Extra Information:
+## This is the default language file for Freeze.
+## The default language is "en_us", also known as English (United States).
+## Context will be added as YAML comments above the string.
+
+## The color scheme for messages is green, aqua, and sometimes red.
+## Command feedback that is successful should always be green.
+## Error messages should always be red.
+## Variables in messages can be gray or white.
+
+## Messages use the MiniMessage format in non-strict mode.
+## More information about MiniMessage can be found here:
+## https://docs.adventure.kyori.net/minimessage/format.html
+
+---
+language-name: "en_us"
+decimal-format: "0.00"
+
 error:
-  invalid-target: "&7{target}&c is not online or does not exist."
-  no-permission: "&cYou do not have access to that command."
-  nobody-frozen: "&cThere are no frozen players currently online."
-  not-frozen: "&7{target}&c is not currently frozen."
-  currently-frozen: "&7{target}&c is already frozen."
-  player-immune: "&7{target}&c is immune to ice."
+  invalid-target: "<red><gray>{target}</gray> is not online or does not exist.</red>"
+  no-permission: "<red>You do not have access to that command.</red>"
+  nobody-frozen: "<red>There are no frozen players currently online.</red>"
+  not-frozen: "<red><gray>{target}</gray> is not currently frozen.</red>"
+  currently-frozen: "<red><gray>{target}</gray> is already frozen.</red>"
+  player-immune: "<red><gray>{target}</gray> is immune to ice.</red>"
 
 action-bar:
-  frozen: "&b&lYou are frozen!"
-  melted: "&aYou are no longer frozen."
+  frozen: "<aqua><bold>You are frozen!</bold></aqua>"
+  melted: "<green>You are no longer frozen.</green>"
 
 help:
-  title: "&3&lFreeze Command List:"
-  help: "&b/freeze help&7: View this list of commands."
+  title: "<aqua><bold>Freeze Command List:</bold></aqua>"
+  help: "<aqua>/freeze help</aqua><gray>: View this list of commands.</gray>"
   freeze:
-    player: "&b/freeze freeze player <player>&7: Freeze a single, online player."
-    all: "&b/freeze freeze all&7: Freeze all players on the server."
+    player: "<aqua>/freeze freeze player \\<player></aqua><gray>: Freeze a single, online player.</gray>"
+    all: "<aqua>/freeze freeze all</aqua><gray>: Freeze all players on the server.</gray>"
   melt:
-    player: "&b/freeze melt player <player>&7: Unfreeze a single, online player."
-    all: "&b/freeze melt all&7: Unfreeze all players on the server."
-  reload: "&b/freeze reload&7: Reload the configuration files."
+    player: "<aqua>/freeze melt player \\player></aqua><gray>: Unfreeze a single, online player.</gray>"
+    all: "<aqua>/freeze melt all</aqua><gray>: Unfreeze all players on the server.</gray>"
+  reload: "<aqua>/freeze reload</aqua><gray>: Reload the configuration files.</gray>"
 
-freeze: "&7{target}&b is now frozen."
-unfreeze: "&7{target}&b is no longer frozen."
-freeze-all: "&bSuccessfully froze &7{amount}&b players."
-freeze-all-failure: "&cThere are no players online or all players are immune."
-unfreeze-all: "&bSuccessfully unfroze &7{amount}&b players."
-unfreeze-all-failure: "&cThere are no frozen players online."
-reload-success: "&aSuccessfully reloaded the configuration files."
+freeze: "<aqua><gray>{target}</gray> is now frozen.</aqua>"
+unfreeze: "<aqua><gray>{target}</gray> is no longer frozen.</aqua>"
+freeze-all: "<aqua>Successfully froze <gray>{amount}</gray> players.</aqua>"
+freeze-all-failure: "<red>There are no players online or all players are immune.</red>"
+unfreeze-all: "<aqua>Successfully unfroze <gray>{amount}</gray> players.</aqua>"
+unfreeze-all-failure: "<red>There are no frozen players online.</red>"
+reload-success: "<green>Successfully reloaded the configuration files.</green>"

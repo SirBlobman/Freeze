@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
+import com.github.sirblobman.api.adventure.adventure.text.Component;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.freeze.FreezePlugin;
 
@@ -16,7 +17,7 @@ public final class SubCommandHelp extends FreezeCommand {
     
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
-        List<String> messageList = new ArrayList<>();
+        List<Component> messageList = new ArrayList<>();
         addMessage(sender, messageList, "help");
         addMessage(sender, messageList, "reload");
         addMessage(sender, messageList, "freeze.player");
@@ -28,16 +29,18 @@ public final class SubCommandHelp extends FreezeCommand {
             return true;
         }
         
-        sendMessage(sender, "help.title", null, true);
-        for(String message : messageList) {
-            sender.sendMessage(message);
+        sendMessage(sender, "help.title", null);
+
+        LanguageManager languageManager = getLanguageManager();
+        for(Component message : messageList) {
+            languageManager.sendMessage(sender, message);
         }
         
         sender.sendMessage("");
         return true;
     }
     
-    private void addMessage(CommandSender sender, List<String> messageList, String key) {
+    private void addMessage(CommandSender sender, List<Component> messageList, String key) {
         String permissionName = ("freeze.command.freeze." + key);
         if(!checkPermission(sender, permissionName, false)) {
             return;
@@ -45,8 +48,8 @@ public final class SubCommandHelp extends FreezeCommand {
         
         String messagePath = ("help." + key);
         LanguageManager languageManager = getLanguageManager();
-        String message = languageManager.getMessage(sender, messagePath, null, true);
-        if(!message.isEmpty()) {
+        Component message = languageManager.getMessage(sender, messagePath, null);
+        if(!Component.empty().equals(message)) {
             messageList.add(message);
         }
     }

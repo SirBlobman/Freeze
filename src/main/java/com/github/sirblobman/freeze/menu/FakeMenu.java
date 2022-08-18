@@ -9,8 +9,11 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.github.sirblobman.api.adventure.adventure.text.Component;
+import com.github.sirblobman.api.adventure.adventure.text.minimessage.MiniMessage;
+import com.github.sirblobman.api.language.ComponentHelper;
+import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.menu.AdvancedAbstractMenu;
-import com.github.sirblobman.api.utility.MessageUtility;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FakeMenuManager;
 import com.github.sirblobman.freeze.manager.FreezeManager;
@@ -41,19 +44,24 @@ public final class FakeMenu extends AdvancedAbstractMenu<FreezePlugin> {
         FakeMenuManager fakeMenuManager = getFakeMenuManager();
         String menuTitle = fakeMenuManager.getMenuTitle();
         int menuSize = fakeMenuManager.getMenuSize();
-        
+
+        FreezePlugin plugin = getPlugin();
+        LanguageManager languageManager = plugin.getLanguageManager();
+        MiniMessage miniMessage = languageManager.getMiniMessage();
+        Component titleComponent = miniMessage.deserialize(menuTitle);
+        String title = ComponentHelper.toLegacy(titleComponent);
+
         Inventory inventory;
         if(menuSize == 5) {
-            String titleColored = MessageUtility.color(menuTitle);
-            inventory = Bukkit.createInventory(this, InventoryType.HOPPER, titleColored);
+            inventory = Bukkit.createInventory(this, InventoryType.HOPPER, title);
         } else {
-            inventory = getInventory(menuSize, menuTitle);
+            inventory = getInventory(menuSize, title);
         }
         
         for(int slot = 0; slot < menuSize; slot++) {
             FakeMenuItem fakeMenuItem = fakeMenuManager.getItem(slot);
             if(fakeMenuItem != null) {
-                ItemStack item = fakeMenuItem.getAsItemStack();
+                ItemStack item = fakeMenuItem.getAsItemStack(plugin);
                 inventory.setItem(slot, item);
             }
         }

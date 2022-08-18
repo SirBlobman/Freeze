@@ -67,11 +67,11 @@ fake-inventory:
       quantity: 1
 
       # This is the name of the item that is shown to players
-      display-name: "&bYou are frozen."
+      display-name: "<aqua>You are frozen.</aqua>"
 
       # These are extra lines of information added to the item.
       lore:
-        - "&7Please contact a staff member"
+        - "<gray>Please contact a staff member</gray>"
 
       # Make the item glow (hidden enchantment)
       glowing: false

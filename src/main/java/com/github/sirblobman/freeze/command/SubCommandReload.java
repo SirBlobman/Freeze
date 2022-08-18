@@ -15,7 +15,7 @@ public final class SubCommandReload extends FreezeCommand {
         FreezePlugin plugin = getFreezePlugin();
         plugin.reloadConfig();
         
-        sendMessage(sender, "reload-success", null, true);
+        sendMessage(sender, "reload-success", null);
         return true;
     }
 }
