@@ -14,7 +14,7 @@ public final class SubCommandHelp extends FreezeCommand {
         super(plugin, "help");
         setPermissionName("freeze.command.freeze.help");
     }
-    
+
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
         List<Component> messageList = new ArrayList<>();
@@ -24,32 +24,32 @@ public final class SubCommandHelp extends FreezeCommand {
         addMessage(sender, messageList, "freeze.all");
         addMessage(sender, messageList, "melt.player");
         addMessage(sender, messageList, "melt.all");
-        
-        if(messageList.isEmpty()) {
+
+        if (messageList.isEmpty()) {
             return true;
         }
-        
+
         sendMessage(sender, "help.title", null);
 
         LanguageManager languageManager = getLanguageManager();
-        for(Component message : messageList) {
+        for (Component message : messageList) {
             languageManager.sendMessage(sender, message);
         }
-        
+
         sender.sendMessage("");
         return true;
     }
-    
+
     private void addMessage(CommandSender sender, List<Component> messageList, String key) {
         String permissionName = ("freeze.command.freeze." + key);
-        if(!checkPermission(sender, permissionName, false)) {
+        if (!checkPermission(sender, permissionName, false)) {
             return;
         }
-        
+
         String messagePath = ("help." + key);
         LanguageManager languageManager = getLanguageManager();
         Component message = languageManager.getMessage(sender, messagePath, null);
-        if(!Component.empty().equals(message)) {
+        if (!Component.empty().equals(message)) {
             messageList.add(message);
         }
     }

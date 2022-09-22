@@ -32,41 +32,41 @@ import com.github.sirblobman.freeze.menu.FakeMenu;
 public final class FreezePlugin extends ConfigurablePlugin {
     private final FreezeManager freezeManager;
     private final FakeMenuManager fakeMenuManager;
-    
+
     public FreezePlugin() {
         this.freezeManager = new FreezeManager(this);
         this.fakeMenuManager = new FakeMenuManager(this);
     }
-    
+
     @Override
     public void onLoad() {
         ConfigurationManager configurationManager = getConfigurationManager();
         configurationManager.saveDefault("config.yml");
-        
+
         LanguageManager languageManager = getLanguageManager();
         languageManager.saveDefaultLanguageFiles();
     }
-    
+
     @Override
     public void onEnable() {
         reloadConfiguration();
-        
+
         registerCommands();
         registerListeners();
 
         registerUpdateChecker();
         registerbStats();
     }
-    
+
     @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
-        
+
         FreezeManager freezeManager = getFreezeManager();
         freezeManager.removeAll();
-    
+
         Collection<? extends Player> playerCollection = Bukkit.getOnlinePlayers();
-        for(Player player : playerCollection) {
+        for (Player player : playerCollection) {
             closeFakeMenu(player);
         }
     }
@@ -82,28 +82,28 @@ public final class FreezePlugin extends ConfigurablePlugin {
         FakeMenuManager fakeMenuManager = getFakeMenuManager();
         fakeMenuManager.reload();
     }
-    
+
     public void closeFakeMenu(Player player) {
         InventoryView openInventory = player.getOpenInventory();
         Inventory topInventory = openInventory.getTopInventory();
         InventoryHolder holder = topInventory.getHolder();
-        if(holder instanceof FakeMenu) {
+        if (holder instanceof FakeMenu) {
             player.closeInventory();
         }
     }
-    
+
     public FreezeManager getFreezeManager() {
         return this.freezeManager;
     }
-    
+
     public FakeMenuManager getFakeMenuManager() {
         return this.fakeMenuManager;
     }
-    
+
     private void registerCommands() {
         new CommandFreeze(this).register();
     }
-    
+
     private void registerListeners() {
         new ListenerBreakAndPlace(this).register();
         new ListenerCommand(this).register();

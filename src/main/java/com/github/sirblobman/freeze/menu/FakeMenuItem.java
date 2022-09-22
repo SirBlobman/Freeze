@@ -31,7 +31,7 @@ public final class FakeMenuItem {
     private List<String> lore;
     private boolean glowing;
     private Integer customModelData;
-    
+
     public FakeMenuItem() {
         this.slot = 0;
         this.material = XMaterial.AIR;
@@ -41,54 +41,58 @@ public final class FakeMenuItem {
         this.glowing = false;
         this.customModelData = null;
     }
-    
+
     public int getSlot() {
         return this.slot;
     }
-    
+
     public void setSlot(int slot) {
-        if(slot < 0) {
+        if (slot < 0) {
             throw new IllegalArgumentException("slot must be at least 0.");
         }
-        
+
         this.slot = slot;
     }
-    
+
     @NotNull
     public XMaterial getMaterial() {
         return this.material;
     }
-    
+
     public void setMaterial(XMaterial material) {
         Validate.notNull(material, "material must not be null!");
         this.material = material;
     }
-    
+
     public int getQuantity() {
         return this.quantity;
     }
-    
+
     public void setQuantity(int quantity) {
-        if(quantity < 0) {
+        if (quantity < 0) {
             throw new IllegalArgumentException("quantity must be at least 0.");
         }
-        
-        if(quantity > 64) {
+
+        if (quantity > 64) {
             throw new IllegalArgumentException("quantity must not be higher than 64.");
         }
-        
+
         this.quantity = quantity;
     }
-    
+
     @Nullable
     public String getDisplayName() {
         return this.displayName;
     }
-    
+
+    public void setDisplayName(@Nullable String displayName) {
+        this.displayName = displayName;
+    }
+
     @Nullable
     public String getDisplayNameFormatted(FreezePlugin plugin) {
         String displayName = getDisplayName();
-        if(displayName == null) {
+        if (displayName == null) {
             return null;
         }
 
@@ -97,20 +101,20 @@ public final class FakeMenuItem {
         Component component = miniMessage.deserialize(displayName);
         return ComponentHelper.toLegacy(component);
     }
-    
-    public void setDisplayName(@Nullable String displayName) {
-        this.displayName = displayName;
-    }
-    
+
     @Nullable
     public List<String> getLore() {
         return this.lore;
     }
-    
+
+    public void setLore(@Nullable List<String> lore) {
+        this.lore = lore;
+    }
+
     @Nullable
     public List<String> getLoreFormatted(FreezePlugin plugin) {
         List<String> lore = getLore();
-        if(lore == null) {
+        if (lore == null) {
             return null;
         }
 
@@ -122,110 +126,106 @@ public final class FakeMenuItem {
             Component component = miniMessage.deserialize(line);
             newLore.add(ComponentHelper.toLegacy(component));
         }
-        
+
         return newLore;
     }
-    
-    public void setLore(@Nullable List<String> lore) {
-        this.lore = lore;
-    }
-    
+
     public boolean isGlowing() {
         return this.glowing;
     }
-    
+
     public void setGlowing(boolean glowing) {
         this.glowing = glowing;
     }
-    
+
     @Nullable
     public Integer getCustomModelData() {
         return this.customModelData;
     }
-    
+
     public void setCustomModelData(@Nullable Integer customModelData) {
         this.customModelData = customModelData;
     }
-    
+
     public void load(ConfigurationSection section) {
         Validate.notNull(section, "section must not be null!");
-        
+
         int slot = section.getInt("slot");
         setSlot(slot);
-        
+
         String materialName = section.getString("material");
-        if(materialName == null) {
+        if (materialName == null) {
             throw new IllegalArgumentException("material is not valid.");
         }
-        
+
         Optional<XMaterial> optionalMaterial = XMaterial.matchXMaterial(materialName);
-        if(!optionalMaterial.isPresent()) {
+        if (!optionalMaterial.isPresent()) {
             throw new IllegalArgumentException(materialName + " is not a valid XMaterial name.");
         }
-        
+
         XMaterial material = optionalMaterial.get();
         setMaterial(material);
-        
+
         int quantity = section.getInt("quantity");
         setQuantity(quantity);
-        
+
         String displayName = section.getString("display-name");
         setDisplayName(displayName);
-    
+
         List<String> lore = section.getStringList("lore");
         setLore(lore.isEmpty() ? null : lore);
-        
+
         boolean glowing = section.getBoolean("glowing");
         setGlowing(glowing);
-        
-        if(section.isSet("custom-model-data")) {
+
+        if (section.isSet("custom-model-data")) {
             int customModelData = section.getInt("custom-model-data");
             setCustomModelData(customModelData);
         } else {
             setCustomModelData(null);
         }
     }
-    
+
     @NotNull
     public ItemStack getAsItemStack(FreezePlugin plugin) {
         XMaterial material = getMaterial();
         ItemStack item = material.parseItem();
-        if(item == null) {
+        if (item == null) {
             return new ItemStack(Material.AIR);
         }
-        
+
         int quantity = getQuantity();
         item.setAmount(quantity);
-    
+
         ItemMeta itemMeta = item.getItemMeta();
-        if(itemMeta == null) {
+        if (itemMeta == null) {
             return item;
         }
-        
+
         String displayName = getDisplayNameFormatted(plugin);
-        if(displayName != null) {
+        if (displayName != null) {
             itemMeta.setDisplayName(displayName);
         }
-        
+
         List<String> lore = getLoreFormatted(plugin);
-        if(lore != null) {
+        if (lore != null) {
             itemMeta.setLore(lore);
         }
-        
+
         Integer customModelData = getCustomModelData();
-        if(customModelData != null) {
+        if (customModelData != null) {
             int minorVersion = VersionUtility.getMinorVersion();
-            if(minorVersion >= 14) {
+            if (minorVersion >= 14) {
                 itemMeta.setCustomModelData(customModelData);
             }
         }
-        
+
         boolean glowing = isGlowing();
-        if(glowing) {
+        if (glowing) {
             itemMeta.addEnchant(Enchantment.LUCK, 1, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
-        
+
         item.setItemMeta(itemMeta);
         return item;
     }

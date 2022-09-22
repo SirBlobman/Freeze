@@ -17,42 +17,42 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class FreezeCommand extends Command {
     private final FreezePlugin plugin;
-    
+
     public FreezeCommand(FreezePlugin plugin, String commandName) {
         super(plugin, commandName);
         this.plugin = plugin;
     }
-    
+
     @NotNull
     @Override
     protected final LanguageManager getLanguageManager() {
         FreezePlugin plugin = getFreezePlugin();
         return plugin.getLanguageManager();
     }
-    
+
     @Override
     protected List<String> onTabComplete(CommandSender sender, String[] args) {
         return Collections.emptyList();
     }
-    
+
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
         return false;
     }
-    
+
     protected final FreezePlugin getFreezePlugin() {
         return this.plugin;
     }
-    
+
     protected final FreezeManager getFreezeManager() {
         FreezePlugin plugin = getFreezePlugin();
         return plugin.getFreezeManager();
     }
-    
+
     protected final boolean isImmune(Player player) {
         return player.hasPermission("freeze.immune");
     }
-    
+
     protected final Replacer getReplacer(String literal, String replacement) {
         return new SimpleReplacer(literal, replacement);
     }

@@ -16,42 +16,42 @@ public class SubCommandFreezePlayer extends FreezeCommand {
         super(plugin, "player");
         setPermissionName("freeze.command.freeze.freeze.player");
     }
-    
+
     @Override
     protected List<String> onTabComplete(CommandSender sender, String[] args) {
-        if(args.length == 1) {
+        if (args.length == 1) {
             Set<String> valueSet = getOnlinePlayerNames();
             return getMatching(args[0], valueSet);
         }
-        
+
         return Collections.emptyList();
     }
-    
+
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
-        if(args.length < 1) {
+        if (args.length < 1) {
             return false;
         }
-        
+
         Player target = findTarget(sender, args[0]);
-        if(target == null) {
+        if (target == null) {
             return true;
         }
-        
+
         String targetName = target.getName();
         Replacer targetNameReplacer = getReplacer("{target}", targetName);
-        
-        if(isImmune(target)) {
+
+        if (isImmune(target)) {
             sendMessage(sender, "error.player-immune", targetNameReplacer);
             return true;
         }
-        
+
         FreezeManager freezeManager = getFreezeManager();
-        if(freezeManager.isFrozen(target)) {
+        if (freezeManager.isFrozen(target)) {
             sendMessage(sender, "error.currently-frozen", targetNameReplacer);
             return true;
         }
-        
+
         freezeManager.setFrozen(target, true);
         sendMessage(sender, "freeze", targetNameReplacer);
         return true;

@@ -16,41 +16,41 @@ import com.github.sirblobman.freeze.event.PlayerMeltEvent;
 public final class FreezeManager {
     private final FreezePlugin plugin;
     private final Set<UUID> frozenPlayerSet;
-    
+
     public FreezeManager(FreezePlugin plugin) {
         this.plugin = Validate.notNull(plugin, "plugin must not be null!");
         this.frozenPlayerSet = new HashSet<>();
     }
-    
+
     public FreezePlugin getPlugin() {
         return this.plugin;
     }
-    
+
     public void setFrozen(Player player, boolean freeze) {
         UUID playerId = player.getUniqueId();
         PluginManager pluginManager = Bukkit.getPluginManager();
         boolean wasFrozen = isFrozen(player);
-        
-        if(freeze) {
+
+        if (freeze) {
             this.frozenPlayerSet.add(playerId);
-            if(!wasFrozen) {
+            if (!wasFrozen) {
                 PlayerFreezeEvent freezeEvent = new PlayerFreezeEvent(player);
                 pluginManager.callEvent(freezeEvent);
             }
         } else {
             this.frozenPlayerSet.remove(playerId);
-            if(wasFrozen) {
+            if (wasFrozen) {
                 PlayerMeltEvent meltEvent = new PlayerMeltEvent(player);
                 pluginManager.callEvent(meltEvent);
             }
         }
     }
-    
+
     public boolean isFrozen(Player player) {
         UUID playerId = player.getUniqueId();
         return this.frozenPlayerSet.contains(playerId);
     }
-    
+
     public void removeAll() {
         this.frozenPlayerSet.clear();
     }

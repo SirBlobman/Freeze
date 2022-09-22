@@ -15,32 +15,32 @@ public abstract class FreezeListener extends PluginListener<FreezePlugin> {
     public FreezeListener(FreezePlugin plugin) {
         super(plugin);
     }
-    
+
     protected final FreezeManager getFreezeManager() {
         FreezePlugin plugin = getPlugin();
         return plugin.getFreezeManager();
     }
-    
+
     protected final ConfigurationManager getConfigurationManager() {
         FreezePlugin plugin = getPlugin();
         return plugin.getConfigurationManager();
     }
-    
+
     protected final LanguageManager getLanguageManager() {
         FreezePlugin plugin = getPlugin();
         return plugin.getLanguageManager();
     }
-    
+
     protected final YamlConfiguration getConfiguration() {
         ConfigurationManager configurationManager = getConfigurationManager();
         return configurationManager.get("config.yml");
     }
-    
+
     protected final void sendFrozenMessage(Player player) {
         LanguageManager languageManager = getLanguageManager();
         languageManager.sendActionBar(player, "action-bar.frozen", null);
     }
-    
+
     protected final boolean isSimilar(Location location1, Location location2) {
         double x1 = location1.getX();
         double y1 = location1.getY();
@@ -50,25 +50,25 @@ public abstract class FreezeListener extends PluginListener<FreezePlugin> {
         double z2 = location2.getZ();
         return (x1 == x2 && z1 == z2 && y2 <= y1);
     }
-    
+
     protected final void checkEvent(Player player, Cancellable e) {
         boolean disabled = isDisabled();
         checkEvent(player, e, disabled);
     }
-    
+
     protected final void checkEvent(Player player, Cancellable e, boolean disabled) {
-        if(disabled) {
+        if (disabled) {
             return;
         }
-        
+
         FreezeManager freezeManager = getFreezeManager();
-        if(!freezeManager.isFrozen(player)) {
+        if (!freezeManager.isFrozen(player)) {
             return;
         }
-        
+
         e.setCancelled(true);
         sendFrozenMessage(player);
     }
-    
+
     protected abstract boolean isDisabled();
 }

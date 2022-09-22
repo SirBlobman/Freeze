@@ -14,35 +14,35 @@ public final class ListenerFakeMenu extends FreezeListener {
     public ListenerFakeMenu(FreezePlugin plugin) {
         super(plugin);
     }
-    
+
     private FakeMenuManager getFakeMenuManager() {
         FreezePlugin plugin = getPlugin();
         return plugin.getFakeMenuManager();
     }
-    
+
     @Override
     protected boolean isDisabled() {
         FakeMenuManager fakeMenuManager = getFakeMenuManager();
         return !fakeMenuManager.isEnabled();
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onFreeze(PlayerFreezeEvent e) {
-        if(isDisabled()) {
+        if (isDisabled()) {
             return;
         }
-    
+
         Player player = e.getPlayer();
         FreezePlugin plugin = getPlugin();
         new FakeMenu(plugin, player).open();
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMelt(PlayerMeltEvent e) {
-        if(isDisabled()) {
+        if (isDisabled()) {
             return;
         }
-        
+
         Player player = e.getPlayer();
         FreezePlugin freezePlugin = getPlugin();
         freezePlugin.closeFakeMenu(player);

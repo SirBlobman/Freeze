@@ -15,40 +15,40 @@ public class SubCommandMeltAll extends FreezeCommand {
         super(plugin, "all");
         setPermissionName("freeze.command.freeze.melt.all");
     }
-    
+
     @Override
     protected boolean execute(CommandSender sender, String[] args) {
         int meltCount = meltAllCount();
-        if(meltCount <= 0) {
+        if (meltCount <= 0) {
             sendMessage(sender, "unfreeze-all-failure", null);
             return true;
         }
-        
+
         String meltCountString = Integer.toString(meltCount);
         Replacer meltCountReplacer = getReplacer("{amount}", meltCountString);
         sendMessage(sender, "unfreeze-all", meltCountReplacer);
         return true;
     }
-    
+
     private int meltAllCount() {
         int count = 0;
         Collection<? extends Player> onlinePlayerCollection = Bukkit.getOnlinePlayers();
-        for(Player player : onlinePlayerCollection) {
-            if(melt(player)) {
+        for (Player player : onlinePlayerCollection) {
+            if (melt(player)) {
                 count++;
             }
         }
-        
+
         return count;
     }
-    
+
     private boolean melt(Player player) {
         FreezeManager freezeManager = getFreezeManager();
-        if(freezeManager.isFrozen(player)) {
+        if (freezeManager.isFrozen(player)) {
             freezeManager.setFrozen(player, false);
             return true;
         }
-        
+
         return false;
     }
 }

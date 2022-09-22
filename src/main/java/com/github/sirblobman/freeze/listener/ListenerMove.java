@@ -14,29 +14,29 @@ public final class ListenerMove extends FreezeListener {
     public ListenerMove(FreezePlugin plugin) {
         super(plugin);
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onMove(PlayerMoveEvent e) {
-        if(isDisabled()) {
+        if (isDisabled()) {
             return;
         }
-        
+
         Player player = e.getPlayer();
         FreezeManager freezeManager = getFreezeManager();
-        if(!freezeManager.isFrozen(player)) {
+        if (!freezeManager.isFrozen(player)) {
             return;
         }
-        
+
         Location fromLocation = e.getFrom();
         Location toLocation = e.getTo();
-        if(toLocation == null || isSimilar(fromLocation, toLocation)) {
+        if (toLocation == null || isSimilar(fromLocation, toLocation)) {
             return;
         }
-        
+
         e.setTo(fromLocation);
         sendFrozenMessage(player);
     }
-    
+
     @Override
     protected boolean isDisabled() {
         YamlConfiguration configuration = getConfiguration();

@@ -1,9 +1,12 @@
 # Freeze
+
 A simple plugin that allows you to stop players from moving and executing commands.  
 [Spigot Link](https://www.spigotmc.org/resources/31822/)
 
-### Freeze API 
+### Freeze API
+
 **Maven Repository:**
+
 ```xml
 <!-- SirBlobman Public Repository -->
 <repository>
@@ -13,6 +16,7 @@ A simple plugin that allows you to stop players from moving and executing comman
 ```
 
 **Maven Dependency:**
+
 ```xml
 <!-- Freeze Plugin -->
 <dependency>
@@ -24,16 +28,20 @@ A simple plugin that allows you to stop players from moving and executing comman
 ```
 
 ### API Usage
+
 #### Check if a player is frozen:
+
 Make sure that you have Freeze as a dependency and it's installed on the server.
 
 **plugin.yml:**
+
 ```yaml
 softdepend:
   - "Freeze"
 ```
 
 **FreezeHook.java**
+
 ```java
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -48,7 +56,7 @@ public final class FreezeHook {
         PluginManager pluginManager = Bukkit.getPluginManager();
         return pluginManager.isPluginEnabled("Freeze");
     }
-    
+
     public static boolean isFrozen(Player player) {
         FreezePlugin plugin = JavaPlugin.getPlugin(FreezePlugin.class);
         FreezeManager freezeManager = plugin.getFreezeManager();

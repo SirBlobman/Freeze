@@ -13,19 +13,19 @@ public final class ListenerBreakAndPlace extends FreezeListener {
     public ListenerBreakAndPlace(FreezePlugin plugin) {
         super(plugin);
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e) {
         Player player = e.getPlayer();
         checkEvent(player, e);
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
         Player player = e.getPlayer();
         checkEvent(player, e);
     }
-    
+
     @Override
     protected boolean isDisabled() {
         YamlConfiguration configuration = getConfiguration();
