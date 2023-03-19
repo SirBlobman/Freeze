@@ -51,6 +51,9 @@ public final class FreezePlugin extends ConfigurablePlugin {
     public void onEnable() {
         reloadConfiguration();
 
+        LanguageManager languageManager = getLanguageManager();
+        languageManager.onPluginEnable();
+
         registerCommands();
         registerListeners();
 
