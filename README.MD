@@ -11,7 +11,7 @@ A simple plugin that allows you to stop players from moving and executing comman
 <!-- SirBlobman Public Repository -->
 <repository>
     <id>sirblobman-public</id>
-    <url>https://nexus.sirblobman.xyz/repository/public/</url>
+    <url>https://nexus.sirblobman.xyz/public/</url>
 </repository>
 ```
 
