@@ -1,6 +1,5 @@
 package com.github.sirblobman.freeze.listener;
 
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 
 public final class ListenerDamage extends FreezeListener {
     public ListenerDamage(FreezePlugin plugin) {
@@ -31,12 +31,12 @@ public final class ListenerDamage extends FreezeListener {
 
     @Override
     protected boolean isDisabled() {
-        YamlConfiguration configuration = getConfiguration();
-        return !configuration.getBoolean("prevent-damage", true);
+        FreezeConfiguration configuration = getConfiguration();
+        return !configuration.isPreventDamage();
     }
 
     private boolean isDisabled2() {
-        YamlConfiguration configuration = getConfiguration();
-        return !configuration.getBoolean("prevent-attacking", true);
+        FreezeConfiguration configuration = getConfiguration();
+        return !configuration.isPreventAttacking();
     }
 }

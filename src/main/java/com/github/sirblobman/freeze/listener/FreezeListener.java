@@ -1,7 +1,6 @@
 package com.github.sirblobman.freeze.listener;
 
 import org.bukkit.Location;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
@@ -9,6 +8,7 @@ import com.github.sirblobman.api.configuration.ConfigurationManager;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.plugin.listener.PluginListener;
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
 public abstract class FreezeListener extends PluginListener<FreezePlugin> {
@@ -31,9 +31,9 @@ public abstract class FreezeListener extends PluginListener<FreezePlugin> {
         return plugin.getLanguageManager();
     }
 
-    protected final YamlConfiguration getConfiguration() {
-        ConfigurationManager configurationManager = getConfigurationManager();
-        return configurationManager.get("config.yml");
+    protected final FreezeConfiguration getConfiguration() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getConfiguration();
     }
 
     protected final void sendFrozenMessage(Player player) {

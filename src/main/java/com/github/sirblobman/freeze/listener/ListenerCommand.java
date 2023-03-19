@@ -4,13 +4,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
 public final class ListenerCommand extends FreezeListener {
@@ -42,8 +42,8 @@ public final class ListenerCommand extends FreezeListener {
 
     @Override
     protected boolean isDisabled() {
-        YamlConfiguration configuration = getConfiguration();
-        return !configuration.getBoolean("prevent-commands", true);
+        FreezeConfiguration configuration = getConfiguration();
+        return !configuration.isPreventCommands();
     }
 
     private String fixCommand(String message) {
@@ -55,14 +55,14 @@ public final class ListenerCommand extends FreezeListener {
     }
 
     private boolean isBlocked(String command) {
-        YamlConfiguration configuration = getConfiguration();
-        List<String> blockedCommandList = configuration.getStringList("blocked-command-list");
+        FreezeConfiguration configuration = getConfiguration();
+        List<String> blockedCommandList = configuration.getBlockedCommandList();
         return matchesAny(command, blockedCommandList);
     }
 
     private boolean isAllowed(String command) {
-        YamlConfiguration configuration = getConfiguration();
-        List<String> allowedCommandList = configuration.getStringList("allowed-command-list");
+        FreezeConfiguration configuration = getConfiguration();
+        List<String> allowedCommandList = configuration.getAllowedCommandList();
         return matchesAny(command, allowedCommandList);
     }
 

@@ -8,29 +8,37 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.sirblobman.api.adventure.adventure.text.Component;
-import com.github.sirblobman.api.adventure.adventure.text.minimessage.MiniMessage;
-import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.menu.AdvancedAbstractMenu;
 import com.github.sirblobman.freeze.FreezePlugin;
-import com.github.sirblobman.freeze.manager.FakeMenuManager;
+import com.github.sirblobman.freeze.configuration.FakeInventoryConfiguration;
+import com.github.sirblobman.freeze.configuration.FakeInventoryItem;
+import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
 import org.jetbrains.annotations.NotNull;
 
 public final class FakeMenu extends AdvancedAbstractMenu<FreezePlugin> {
+    private Inventory inventory;
+
     public FakeMenu(FreezePlugin plugin, Player player) {
         super(plugin, player);
+        this.inventory = null;
     }
 
-    private FakeMenuManager getFakeMenuManager() {
+    private FreezeConfiguration getConfiguration() {
         FreezePlugin plugin = getPlugin();
-        return plugin.getFakeMenuManager();
+        return plugin.getConfiguration();
+    }
+
+    private FakeInventoryConfiguration getFakeInventoryConfiguration() {
+        FreezeConfiguration configuration = getConfiguration();
+        return configuration.getFakeInventoryConfiguration();
     }
 
     @Override
     public void open() {
-        FakeMenuManager fakeMenuManager = getFakeMenuManager();
-        if (fakeMenuManager.isEnabled()) {
+        FakeInventoryConfiguration configuration = getFakeInventoryConfiguration();
+        if (configuration.isEnabled()) {
             super.open();
         }
     }
@@ -38,25 +46,26 @@ public final class FakeMenu extends AdvancedAbstractMenu<FreezePlugin> {
     @NotNull
     @Override
     public Inventory getInventory() {
-        FakeMenuManager fakeMenuManager = getFakeMenuManager();
-        String titleString = fakeMenuManager.getMenuTitle();
-        int menuSize = fakeMenuManager.getMenuSize();
-
-        FreezePlugin plugin = getPlugin();
-        LanguageManager languageManager = plugin.getLanguageManager();
-        MiniMessage miniMessage = languageManager.getMiniMessage();
-        Component title = miniMessage.deserialize(titleString);
-        Inventory inventory = getInventory(menuSize, title);
-
-        for (int slot = 0; slot < menuSize; slot++) {
-            FakeMenuItem fakeMenuItem = fakeMenuManager.getItem(slot);
-            if (fakeMenuItem != null) {
-                ItemStack item = fakeMenuItem.getAsItemStack(plugin);
-                inventory.setItem(slot, item);
-            }
+        if (this.inventory != null) {
+            return this.inventory;
         }
 
-        return inventory;
+        FakeInventoryConfiguration configuration = getFakeInventoryConfiguration();
+        Component title = configuration.getTitle();
+        int size = configuration.getSize();
+
+        Inventory inventory = getInventory(size, title);
+        for (int slot = 0; slot < size; slot++) {
+            FakeInventoryItem fakeItem = configuration.getItem(slot);
+            if (fakeItem == null) {
+                continue;
+            }
+
+            ItemStack item = fakeItem.getItem();
+            inventory.setItem(slot, item);
+        }
+
+        return (this.inventory = inventory);
     }
 
     @Override

@@ -5,9 +5,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.configuration.FakeInventoryConfiguration;
+import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.event.PlayerFreezeEvent;
 import com.github.sirblobman.freeze.event.PlayerMeltEvent;
-import com.github.sirblobman.freeze.manager.FakeMenuManager;
 import com.github.sirblobman.freeze.menu.FakeMenu;
 
 public final class ListenerFakeMenu extends FreezeListener {
@@ -15,15 +16,15 @@ public final class ListenerFakeMenu extends FreezeListener {
         super(plugin);
     }
 
-    private FakeMenuManager getFakeMenuManager() {
-        FreezePlugin plugin = getPlugin();
-        return plugin.getFakeMenuManager();
+    private FakeInventoryConfiguration getFakeInventoryConfiguration() {
+        FreezeConfiguration configuration = getConfiguration();
+        return configuration.getFakeInventoryConfiguration();
     }
 
     @Override
     protected boolean isDisabled() {
-        FakeMenuManager fakeMenuManager = getFakeMenuManager();
-        return !fakeMenuManager.isEnabled();
+        FakeInventoryConfiguration configuration = getFakeInventoryConfiguration();
+        return !configuration.isEnabled();
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

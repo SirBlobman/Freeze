@@ -1,6 +1,5 @@
 package com.github.sirblobman.freeze.listener;
 
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -8,6 +7,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 
 public final class ListenerBreakAndPlace extends FreezeListener {
     public ListenerBreakAndPlace(FreezePlugin plugin) {
@@ -28,7 +28,7 @@ public final class ListenerBreakAndPlace extends FreezeListener {
 
     @Override
     protected boolean isDisabled() {
-        YamlConfiguration configuration = getConfiguration();
-        return !configuration.getBoolean("prevent-block-break-and-place", true);
+        FreezeConfiguration configuration = getConfiguration();
+        return !configuration.isPreventBlockActions();
     }
 }

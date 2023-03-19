@@ -1,13 +1,13 @@
 package com.github.sirblobman.freeze.listener;
 
 import org.bukkit.Location;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
 public final class ListenerMove extends FreezeListener {
@@ -39,7 +39,7 @@ public final class ListenerMove extends FreezeListener {
 
     @Override
     protected boolean isDisabled() {
-        YamlConfiguration configuration = getConfiguration();
-        return !configuration.getBoolean("prevent-movement", true);
+        FreezeConfiguration configuration = getConfiguration();
+        return !configuration.isPreventMovement();
     }
 }
