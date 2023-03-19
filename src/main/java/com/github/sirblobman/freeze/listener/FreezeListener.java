@@ -38,7 +38,7 @@ public abstract class FreezeListener extends PluginListener<FreezePlugin> {
 
     protected final void sendFrozenMessage(Player player) {
         LanguageManager languageManager = getLanguageManager();
-        languageManager.sendActionBar(player, "action-bar.frozen", null);
+        languageManager.sendActionBar(player, "action-bar.frozen");
     }
 
     protected final boolean isSimilar(Location location1, Location location2) {

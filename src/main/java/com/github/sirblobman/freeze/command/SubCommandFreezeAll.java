@@ -6,7 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.github.sirblobman.api.language.Replacer;
+import com.github.sirblobman.api.language.replacer.Replacer;
+import com.github.sirblobman.api.language.replacer.StringReplacer;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
@@ -20,12 +21,12 @@ public class SubCommandFreezeAll extends FreezeCommand {
     protected boolean execute(CommandSender sender, String[] args) {
         int freezeCount = freezeAllCount();
         if (freezeCount <= 0) {
-            sendMessage(sender, "freeze-all-failure", null);
+            sendMessage(sender, "freeze-all-failure");
             return true;
         }
 
         String freezeCountString = Integer.toString(freezeCount);
-        Replacer freezeCountReplacer = getReplacer("{amount}", freezeCountString);
+        Replacer freezeCountReplacer = new StringReplacer("{amount}", freezeCountString);
         sendMessage(sender, "freeze-all", freezeCountReplacer);
         return true;
     }

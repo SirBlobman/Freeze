@@ -29,7 +29,7 @@ public final class SubCommandHelp extends FreezeCommand {
             return true;
         }
 
-        sendMessage(sender, "help.title", null);
+        sendMessage(sender, "help.title");
 
         LanguageManager languageManager = getLanguageManager();
         for (Component message : messageList) {
@@ -48,7 +48,7 @@ public final class SubCommandHelp extends FreezeCommand {
 
         String messagePath = ("help." + key);
         LanguageManager languageManager = getLanguageManager();
-        Component message = languageManager.getMessage(sender, messagePath, null);
+        Component message = languageManager.getMessage(sender, messagePath);
         if (!Component.empty().equals(message)) {
             messageList.add(message);
         }

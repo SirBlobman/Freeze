@@ -7,7 +7,8 @@ import java.util.Set;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.github.sirblobman.api.language.Replacer;
+import com.github.sirblobman.api.language.replacer.Replacer;
+import com.github.sirblobman.api.language.replacer.StringReplacer;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
@@ -39,7 +40,7 @@ public class SubCommandMeltPlayer extends FreezeCommand {
         }
 
         String targetName = target.getName();
-        Replacer targetNameReplacer = getReplacer("{target}", targetName);
+        Replacer targetNameReplacer = new StringReplacer("{target}", targetName);
 
         if (isImmune(target)) {
             sendMessage(sender, "error.player-immune", targetNameReplacer);

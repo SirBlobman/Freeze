@@ -8,8 +8,6 @@ import org.bukkit.entity.Player;
 
 import com.github.sirblobman.api.command.Command;
 import com.github.sirblobman.api.language.LanguageManager;
-import com.github.sirblobman.api.language.Replacer;
-import com.github.sirblobman.api.language.SimpleReplacer;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
@@ -51,9 +49,5 @@ public abstract class FreezeCommand extends Command {
 
     protected final boolean isImmune(Player player) {
         return player.hasPermission("freeze.immune");
-    }
-
-    protected final Replacer getReplacer(String literal, String replacement) {
-        return new SimpleReplacer(literal, replacement);
     }
 }
