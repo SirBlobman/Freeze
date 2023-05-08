@@ -7,11 +7,17 @@ import java.util.logging.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 
 import com.github.sirblobman.api.configuration.PlayerDataManager;
+import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.freeze.event.PlayerFreezeEvent;
+import com.github.sirblobman.freeze.event.PlayerMeltEvent;
 
 public final class FreezeManager {
     private final FreezePlugin plugin;
@@ -34,6 +40,25 @@ public final class FreezeManager {
         return plugin.getPlayerDataManager();
     }
 
+    private @NotNull LanguageManager getLanguageManager() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getLanguageManager();
+    }
+
+    private void triggerMessagesAndEvents(@NotNull Player player) {
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        LanguageManager languageManager = getLanguageManager();
+
+        boolean frozen = isFrozen(player);
+        if (frozen) {
+            languageManager.sendActionBar(player, "action-bar.frozen");
+            pluginManager.callEvent(new PlayerFreezeEvent(player));
+        } else {
+            languageManager.sendActionBar(player, "action-bar.melted");
+            pluginManager.callEvent(new PlayerMeltEvent(player));
+        }
+    }
+
     public boolean isFrozen(@NotNull OfflinePlayer player) {
         PlayerDataManager playerDataManager = getPlayerDataManager();
         if (!playerDataManager.hasData(player)) {
@@ -52,8 +77,16 @@ public final class FreezeManager {
 
         YamlConfiguration configuration = playerDataManager.get(player);
         configuration.set("frozen", frozen);
-        configuration.set("expire-time", null);
+
+        if (!frozen) {
+            configuration.set("expire-time", null);
+        }
+
         playerDataManager.save(player);
+
+        if (player instanceof Player onlinePlayer) {
+            triggerMessagesAndEvents(onlinePlayer);
+        }
     }
 
     public @Nullable Instant getExpireTime(@NotNull OfflinePlayer player) {
