@@ -20,14 +20,13 @@ public final class ListenerItemMoving extends FreezeListener {
     @Override
     protected boolean isDisabled() {
         FreezeConfiguration configuration = getConfiguration();
-        return configuration.isPreventItemMoving();
+        return !configuration.isPreventItemMoving();
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent e) {
         HumanEntity human = e.getWhoClicked();
-        if (human instanceof Player) {
-            Player player = (Player) human;
+        if (human instanceof Player player) {
             checkEvent(player, e);
         }
     }
@@ -35,8 +34,7 @@ public final class ListenerItemMoving extends FreezeListener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInventoryDrag(InventoryDragEvent e) {
         HumanEntity human = e.getWhoClicked();
-        if (human instanceof Player) {
-            Player player = (Player) human;
+        if (human instanceof Player player) {
             checkEvent(player, e);
         }
     }

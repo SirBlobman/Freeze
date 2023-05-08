@@ -18,7 +18,7 @@ public final class ListenerItemDropping extends FreezeListener {
     @Override
     protected boolean isDisabled() {
         FreezeConfiguration configuration = getConfiguration();
-        return configuration.isPreventItemDropping();
+        return !configuration.isPreventItemDropping();
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
