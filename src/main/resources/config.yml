@@ -16,6 +16,13 @@ prevent-damage: true
 # Should players be prevented from attacking players and mobs while frozen?
 prevent-attacking: true
 
+# Should players be prevented from dropping items while frozen?
+prevent-item-dropping: true
+
+# Should players be prevented from moving items in inventories while frozen?
+# This option may not work on player inventories.
+prevent-item-movement: true
+
 # This is a list of commands that will be prevented
 # This list uses the String.startsWith method
 # This means that blocking '/tp' will also block '/tpa' and '/tpo'

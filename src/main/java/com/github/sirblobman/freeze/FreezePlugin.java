@@ -29,6 +29,8 @@ import com.github.sirblobman.freeze.listener.ListenerBreakAndPlace;
 import com.github.sirblobman.freeze.listener.ListenerCommand;
 import com.github.sirblobman.freeze.listener.ListenerDamage;
 import com.github.sirblobman.freeze.listener.ListenerFakeMenu;
+import com.github.sirblobman.freeze.listener.ListenerItemDropping;
+import com.github.sirblobman.freeze.listener.ListenerItemMoving;
 import com.github.sirblobman.freeze.listener.ListenerMove;
 import com.github.sirblobman.freeze.listener.ListenerTeleport;
 import com.github.sirblobman.freeze.manager.FreezeManager;
@@ -126,6 +128,8 @@ public final class FreezePlugin extends ConfigurablePlugin {
         new ListenerMove(this).register();
         new ListenerTeleport(this).register();
         new ListenerFakeMenu(this).register();
+        new ListenerItemDropping(this).register();
+        new ListenerItemMoving(this).register();
     }
 
     private void registerUpdateChecker() {

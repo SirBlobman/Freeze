@@ -19,6 +19,8 @@ public final class FreezeConfiguration implements IConfigurable {
     private boolean preventBlockActions;
     private boolean preventDamage;
     private boolean preventAttacking;
+    private boolean preventItemDropping;
+    private boolean preventItemMoving;
 
     private final List<String> blockedCommandList;
     private final List<String> allowedCommandList;
@@ -31,6 +33,8 @@ public final class FreezeConfiguration implements IConfigurable {
         this.preventBlockActions = true;
         this.preventDamage = true;
         this.preventAttacking = true;
+        this.preventItemDropping = true;
+        this.preventItemMoving = true;
 
         this.blockedCommandList = new ArrayList<>();
         this.allowedCommandList = new ArrayList<>();
@@ -123,5 +127,21 @@ public final class FreezeConfiguration implements IConfigurable {
 
     public @NotNull FakeInventoryConfiguration getFakeInventoryConfiguration() {
         return this.fakeInventoryConfiguration;
+    }
+
+    public boolean isPreventItemDropping() {
+        return this.preventItemDropping;
+    }
+
+    public void setPreventItemDropping(boolean preventItemDropping) {
+        this.preventItemDropping = preventItemDropping;
+    }
+
+    public boolean isPreventItemMoving() {
+        return this.preventItemMoving;
+    }
+
+    public void setPreventItemMoving(boolean preventItemMoving) {
+        this.preventItemMoving = preventItemMoving;
     }
 }
