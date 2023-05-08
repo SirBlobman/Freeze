@@ -107,13 +107,35 @@ public final class CommandFreeze extends FreezeCommand {
         int minutes = parseMatcherPart(matcher, 6, 60);
         int seconds = parseMatcherPart(matcher, 7, 60);
 
-        Duration duration = Duration.of(years, ChronoUnit.YEARS);
-        duration = duration.plus(Duration.of(months, ChronoUnit.MONTHS));
-        duration = duration.plus(Duration.of(weeks, ChronoUnit.WEEKS));
-        duration = duration.plus(Duration.of(days, ChronoUnit.DAYS));
-        duration = duration.plus(Duration.of(hours, ChronoUnit.HOURS));
-        duration = duration.plus(Duration.of(minutes, ChronoUnit.MINUTES));
-        duration = duration.plus(Duration.of(seconds, ChronoUnit.SECONDS));
+        Duration duration = Duration.ZERO;
+
+        if (years > 0) {
+            duration = duration.plus(Duration.of(years, ChronoUnit.YEARS));
+        }
+
+        if (months > 0) {
+            duration = duration.plus(Duration.of(months, ChronoUnit.MONTHS));
+        }
+
+        if (weeks > 0) {
+            duration = duration.plus(Duration.of(weeks, ChronoUnit.WEEKS));
+        }
+
+        if (days > 0) {
+            duration = duration.plus(Duration.of(days, ChronoUnit.DAYS));
+        }
+
+        if (hours > 0) {
+            duration = duration.plus(Duration.of(hours, ChronoUnit.HOURS));
+        }
+
+        if (minutes > 0) {
+            duration = duration.plus(Duration.of(minutes, ChronoUnit.MINUTES));
+        }
+
+        if (seconds > 0) {
+            duration = duration.plus(Duration.of(seconds, ChronoUnit.SECONDS));
+        }
 
         InstantSource now = InstantSource.system();
         InstantSource future = InstantSource.offset(now, duration);

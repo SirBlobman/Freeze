@@ -19,9 +19,9 @@ public final class MeltTask extends TaskDetails {
 
     public MeltTask(@NotNull FreezePlugin plugin) {
         super(plugin);
+        this.plugin = plugin;
         setDelay(20L);
         setPeriod(20L);
-        this.plugin = plugin;
     }
 
     private @NotNull FreezePlugin getFreezePlugin() {
@@ -56,7 +56,8 @@ public final class MeltTask extends TaskDetails {
         }
 
         if (expireTime.isBefore(Instant.now())) {
-            freezeManager.setFrozen(player, false);
+            UnfreezePlayerTask task = new UnfreezePlayerTask(plugin, player);
+            getFreezePlugin().getFoliaHelper().getScheduler().scheduleEntityTask(task);
         }
     }
 }
