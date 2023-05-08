@@ -1,5 +1,7 @@
 package com.github.sirblobman.freeze.menu;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -7,30 +9,28 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.sirblobman.api.adventure.adventure.text.Component;
 import com.github.sirblobman.api.menu.AdvancedAbstractMenu;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.configuration.FakeInventoryConfiguration;
 import com.github.sirblobman.freeze.configuration.FakeInventoryItem;
 import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.manager.FreezeManager;
-
-import org.jetbrains.annotations.NotNull;
+import com.github.sirblobman.api.shaded.adventure.text.Component;
 
 public final class FakeMenu extends AdvancedAbstractMenu<FreezePlugin> {
     private Inventory inventory;
 
-    public FakeMenu(FreezePlugin plugin, Player player) {
+    public FakeMenu(@NotNull FreezePlugin plugin, @NotNull Player player) {
         super(plugin, player);
         this.inventory = null;
     }
 
-    private FreezeConfiguration getConfiguration() {
+    private @NotNull FreezeConfiguration getConfiguration() {
         FreezePlugin plugin = getPlugin();
         return plugin.getConfiguration();
     }
 
-    private FakeInventoryConfiguration getFakeInventoryConfiguration() {
+    private @NotNull FakeInventoryConfiguration getFakeInventoryConfiguration() {
         FreezeConfiguration configuration = getConfiguration();
         return configuration.getFakeInventoryConfiguration();
     }
@@ -43,9 +43,8 @@ public final class FakeMenu extends AdvancedAbstractMenu<FreezePlugin> {
         }
     }
 
-    @NotNull
     @Override
-    public Inventory getInventory() {
+    public @NotNull Inventory getInventory() {
         if (this.inventory != null) {
             return this.inventory;
         }
@@ -69,7 +68,7 @@ public final class FakeMenu extends AdvancedAbstractMenu<FreezePlugin> {
     }
 
     @Override
-    protected void onValidClose(InventoryCloseEvent e) {
+    protected void onValidClose(@NotNull InventoryCloseEvent e) {
         // Reopen menu if player is still frozen.
         Player player = getPlayer();
         FreezePlugin plugin = getPlugin();
@@ -80,13 +79,13 @@ public final class FakeMenu extends AdvancedAbstractMenu<FreezePlugin> {
     }
 
     @Override
-    protected void onValidClick(InventoryClickEvent e) {
+    protected void onValidClick(@NotNull InventoryClickEvent e) {
         // Prevent clicking on any items.
         e.setCancelled(true);
     }
 
     @Override
-    protected void onValidDrag(InventoryDragEvent e) {
+    protected void onValidDrag(@NotNull InventoryDragEvent e) {
         // Prevent dragging on any items.
         e.setCancelled(true);
     }

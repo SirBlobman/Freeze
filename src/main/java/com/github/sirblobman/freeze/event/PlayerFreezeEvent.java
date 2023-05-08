@@ -1,10 +1,10 @@
 package com.github.sirblobman.freeze.event;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * This event is fired when a player is frozen.
@@ -12,23 +12,22 @@ import org.jetbrains.annotations.NotNull;
  * @author SirBlobman
  */
 public final class PlayerFreezeEvent extends PlayerEvent {
-    private static final HandlerList handlerList;
+    private static final HandlerList HANDLER_LIST;
 
     static {
-        handlerList = new HandlerList();
+        HANDLER_LIST = new HandlerList();
     }
 
-    public PlayerFreezeEvent(Player player) {
+    public PlayerFreezeEvent(@NotNull Player player) {
         super(player);
     }
 
-    public static HandlerList getHandlerList() {
-        return handlerList;
+    public static @NotNull HandlerList getHandlerList() {
+        return HANDLER_LIST;
     }
 
-    @NotNull
     @Override
-    public HandlerList getHandlers() {
-        return handlerList;
+    public @NotNull HandlerList getHandlers() {
+        return getHandlerList();
     }
 }

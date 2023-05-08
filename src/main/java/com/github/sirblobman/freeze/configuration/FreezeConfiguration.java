@@ -1,8 +1,11 @@
 package com.github.sirblobman.freeze.configuration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -21,7 +24,7 @@ public final class FreezeConfiguration implements IConfigurable {
     private final List<String> allowedCommandList;
     private final FakeInventoryConfiguration fakeInventoryConfiguration;
 
-    public FreezeConfiguration(FreezePlugin plugin) {
+    public FreezeConfiguration(@NotNull FreezePlugin plugin) {
         this.preventMovement = true;
         this.preventTeleport = true;
         this.preventCommands = true;
@@ -36,7 +39,7 @@ public final class FreezeConfiguration implements IConfigurable {
     }
 
     @Override
-    public void load(ConfigurationSection config) {
+    public void load(@NotNull ConfigurationSection config) {
         setPreventMovement(config.getBoolean("prevent-moving", true));
         setPreventTeleport(config.getBoolean("prevent-teleport", true));
         setPreventCommands(config.getBoolean("prevent-commands", true));
@@ -44,8 +47,8 @@ public final class FreezeConfiguration implements IConfigurable {
         setPreventDamage(config.getBoolean("prevent-damage", true));
         setPreventAttacking(config.getBoolean("prevent-attacking", true));
 
-        setBlockedCommandList(config.getStringList("blocked-command-list"));
-        setAllowedCommandList(config.getStringList("allowed-command-list"));
+        setBlockedCommands(config.getStringList("blocked-command-list"));
+        setAllowedCommands(config.getStringList("allowed-command-list"));
 
         ConfigurationSection fakeInventorySection = getOrCreateSection(config, "fake-inventory");
         FakeInventoryConfiguration fakeInventoryConfiguration = getFakeInventoryConfiguration();
@@ -100,25 +103,25 @@ public final class FreezeConfiguration implements IConfigurable {
         this.preventAttacking = preventAttacking;
     }
 
-    public List<String> getBlockedCommandList() {
+    public @NotNull List<String> getBlockedCommands() {
         return Collections.unmodifiableList(this.blockedCommandList);
     }
 
-    public void setBlockedCommandList(List<String> blockedCommandList) {
+    public void setBlockedCommands(@NotNull Collection<String> blockedCommands) {
         this.blockedCommandList.clear();
-        this.blockedCommandList.addAll(blockedCommandList);
+        this.blockedCommandList.addAll(blockedCommands);
     }
 
-    public List<String> getAllowedCommandList() {
+    public @NotNull List<String> getAllowedCommands() {
         return Collections.unmodifiableList(this.allowedCommandList);
     }
 
-    public void setAllowedCommandList(List<String> allowedCommandList) {
+    public void setAllowedCommands(@NotNull Collection<String> allowedCommands) {
         this.allowedCommandList.clear();
-        this.allowedCommandList.addAll(allowedCommandList);
+        this.allowedCommandList.addAll(allowedCommands);
     }
 
-    public FakeInventoryConfiguration getFakeInventoryConfiguration() {
+    public @NotNull FakeInventoryConfiguration getFakeInventoryConfiguration() {
         return this.fakeInventoryConfiguration;
     }
 }

@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -12,14 +14,14 @@ import com.github.sirblobman.api.language.replacer.StringReplacer;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
-public class SubCommandFreezePlayer extends FreezeCommand {
-    public SubCommandFreezePlayer(FreezePlugin plugin) {
-        super(plugin, "player");
-        setPermissionName("freeze.command.freeze.freeze.player");
+public final class CommandMelt extends FreezeCommand {
+    public CommandMelt(@NotNull FreezePlugin plugin) {
+        super(plugin, "melt");
+        setPermissionName("freeze.command.melt");
     }
 
     @Override
-    protected List<String> onTabComplete(CommandSender sender, String[] args) {
+    protected @NotNull List<String> onTabComplete(@NotNull CommandSender sender, String @NotNull [] args) {
         if (args.length == 1) {
             Set<String> valueSet = getOnlinePlayerNames();
             return getMatching(args[0], valueSet);
@@ -29,7 +31,7 @@ public class SubCommandFreezePlayer extends FreezeCommand {
     }
 
     @Override
-    protected boolean execute(CommandSender sender, String[] args) {
+    protected boolean execute(@NotNull CommandSender sender, String @NotNull [] args) {
         if (args.length < 1) {
             return false;
         }
@@ -40,21 +42,21 @@ public class SubCommandFreezePlayer extends FreezeCommand {
         }
 
         String targetName = target.getName();
-        Replacer targetNameReplacer = new StringReplacer("{target}", targetName);
+        Replacer replacer = new StringReplacer("{target}", targetName);
 
         if (isImmune(target)) {
-            sendMessage(sender, "error.player-immune", targetNameReplacer);
+            sendMessage(sender, "error.player-immune", replacer);
             return true;
         }
 
         FreezeManager freezeManager = getFreezeManager();
-        if (freezeManager.isFrozen(target)) {
-            sendMessage(sender, "error.currently-frozen", targetNameReplacer);
+        if (!freezeManager.isFrozen(target)) {
+            sendMessage(sender, "error.not-frozen", replacer);
             return true;
         }
 
-        freezeManager.setFrozen(target, true);
-        sendMessage(sender, "freeze", targetNameReplacer);
+        freezeManager.setFrozen(target ,false);
+        sendMessage(sender, "unfreeze", replacer);
         return true;
     }
 }

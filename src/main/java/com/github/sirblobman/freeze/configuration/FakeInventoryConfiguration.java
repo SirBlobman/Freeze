@@ -5,41 +5,44 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import org.bukkit.configuration.ConfigurationSection;
 
-import com.github.sirblobman.api.adventure.adventure.text.Component;
-import com.github.sirblobman.api.adventure.adventure.text.format.NamedTextColor;
-import com.github.sirblobman.api.adventure.adventure.text.minimessage.MiniMessage;
 import com.github.sirblobman.api.configuration.IConfigurable;
 import com.github.sirblobman.api.language.LanguageManager;
-import com.github.sirblobman.api.utility.Validate;
 import com.github.sirblobman.freeze.FreezePlugin;
-
-import org.jetbrains.annotations.Nullable;
+import com.github.sirblobman.api.shaded.adventure.text.Component;
+import com.github.sirblobman.api.shaded.adventure.text.format.NamedTextColor;
+import com.github.sirblobman.api.shaded.adventure.text.minimessage.MiniMessage;
 
 public final class FakeInventoryConfiguration implements IConfigurable {
     private final FreezePlugin plugin;
+    private final Map<Integer, FakeInventoryItem> slotMap;
 
     private boolean enabled;
     private Component title;
     private int size;
 
-    private Map<Integer, FakeInventoryItem> slotMap;
 
-    public FakeInventoryConfiguration(FreezePlugin plugin) {
-        this.plugin = Validate.notNull(plugin, "plugin must not be null!");
+    public FakeInventoryConfiguration(@NotNull FreezePlugin plugin) {
+        this.plugin = plugin;
+        this.slotMap = new HashMap<>();
 
         this.enabled = true;
         this.title = Component.text("You are frozen...", NamedTextColor.AQUA);
         this.size = 5;
 
-        this.slotMap = new HashMap<>();
     }
 
     @Override
-    public void load(ConfigurationSection section) {
+    public void load(@NotNull ConfigurationSection section) {
         setEnabled(section.getBoolean("enabled", false));
         setSize(section.getInt("size", 5));
+
+        loadTitle(section.getString("title"));
+        loadItems(getOrCreateSection(section, "items"));
 
         FreezePlugin plugin = getPlugin();
         LanguageManager languageManager = plugin.getLanguageManager();
@@ -54,32 +57,68 @@ public final class FakeInventoryConfiguration implements IConfigurable {
         setTitle(title);
 
         ConfigurationSection itemsSection = getOrCreateSection(section, "items");
-        Set<String> keySet = itemsSection.getKeys(false);
+        loadItems(itemsSection);
+    }
+
+    private @NotNull FreezePlugin getPlugin() {
+        return this.plugin;
+    }
+
+    private @NotNull Logger getLogger() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getLogger();
+    }
+
+    private @NotNull LanguageManager getLanguageManager() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getLanguageManager();
+    }
+
+    private @NotNull MiniMessage getMiniMessage() {
+        LanguageManager languageManager = getLanguageManager();
+        return languageManager.getMiniMessage();
+    }
+
+    private void loadTitle(@Nullable String title) {
+        if (title == null) {
+            setTitle(Component.empty());
+            return;
+        }
+
+        MiniMessage miniMessage = getMiniMessage();
+        setTitle(miniMessage.deserialize(title));
+    }
+
+    private void loadItems(@NotNull ConfigurationSection itemsSection) {
         this.slotMap.clear();
+        Set<String> keySet = itemsSection.getKeys(false);
 
         for (String itemId : keySet) {
-            ConfigurationSection itemSection = itemsSection.getConfigurationSection(itemId);
-            if (itemSection == null) {
+            ConfigurationSection section = itemsSection.getConfigurationSection(itemId);
+            if (section == null) {
                 continue;
             }
 
-            FakeInventoryItem fakeInventoryItem = new FakeInventoryItem(plugin, itemId);
-            fakeInventoryItem.load(itemSection);
-
-            int slot = fakeInventoryItem.getSlot();
-            if (this.slotMap.containsKey(slot)) {
-                Logger logger = plugin.getLogger();
-                logger.warning("Slot '" + slot + "' is duplicated in fake inventory menu.");
-                logger.warning("'" + itemId + "' will override previous item '"
-                        + this.slotMap.get(slot).getId() + "'.");
-            }
-
-            this.slotMap.put(slot, fakeInventoryItem);
+            loadItem(itemId, section);
         }
     }
 
-    private FreezePlugin getPlugin() {
-        return this.plugin;
+    private void loadItem(@NotNull String itemId, @NotNull ConfigurationSection section) {
+        FreezePlugin plugin = getPlugin();
+        FakeInventoryItem item = new FakeInventoryItem(plugin, itemId);
+        item.load(section);
+
+        int slot = item.getSlot();
+        if (this.slotMap.containsKey(slot)) {
+            FakeInventoryItem oldItem = this.slotMap.get(slot);
+            String oldItemId = oldItem.getId();
+
+            Logger logger = getLogger();
+            logger.warning("Slot '" + slot + "' is duplicated in fake inventory menu.");
+            logger.warning("'" + itemId + "' will override previous item '" + oldItemId + "'.");
+        }
+
+        this.slotMap.put(slot, item);
     }
 
     public boolean isEnabled() {
@@ -90,11 +129,11 @@ public final class FakeInventoryConfiguration implements IConfigurable {
         this.enabled = enabled;
     }
 
-    public Component getTitle() {
+    public @NotNull Component getTitle() {
         return title;
     }
 
-    public void setTitle(Component title) {
+    public void setTitle(@NotNull Component title) {
         this.title = title;
     }
 
@@ -106,8 +145,7 @@ public final class FakeInventoryConfiguration implements IConfigurable {
         this.size = size;
     }
 
-    @Nullable
-    public FakeInventoryItem getItem(int slot) {
+    public @Nullable FakeInventoryItem getItem(int slot) {
         return this.slotMap.get(slot);
     }
 }

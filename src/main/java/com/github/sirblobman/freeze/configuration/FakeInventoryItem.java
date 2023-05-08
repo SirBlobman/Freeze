@@ -4,30 +4,32 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.sirblobman.api.adventure.adventure.text.Component;
-import com.github.sirblobman.api.adventure.adventure.text.minimessage.MiniMessage;
 import com.github.sirblobman.api.configuration.IConfigurable;
 import com.github.sirblobman.api.item.ItemBuilder;
 import com.github.sirblobman.api.language.ComponentHelper;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.nms.ItemHandler;
 import com.github.sirblobman.api.nms.MultiVersionHandler;
-import com.github.sirblobman.api.utility.Validate;
-import com.github.sirblobman.api.xseries.XMaterial;
 import com.github.sirblobman.freeze.FreezePlugin;
+import com.github.sirblobman.api.shaded.adventure.text.Component;
+import com.github.sirblobman.api.shaded.adventure.text.minimessage.MiniMessage;
+import com.github.sirblobman.api.shaded.xseries.XMaterial;
 
 public final class FakeInventoryItem implements IConfigurable {
     private final FreezePlugin plugin;
     private final String id;
+
     private ItemBuilder builder;
     private int slot;
 
-    public FakeInventoryItem(FreezePlugin plugin, String id) {
-        this.plugin = Validate.notNull(plugin, "plugin must not be null!");
-        this.id = Validate.notEmpty(id, "id must not be empty!");
+    public FakeInventoryItem(@NotNull FreezePlugin plugin, @NotNull String id) {
+        this.plugin = plugin;
+        this.id = id;
         this.builder = new ItemBuilder(XMaterial.BARRIER);
         this.slot = 0;
     }
@@ -42,20 +44,18 @@ public final class FakeInventoryItem implements IConfigurable {
         }
 
         Optional<XMaterial> optionalMaterial = XMaterial.matchXMaterial(materialName);
-        this.builder = new ItemBuilder(optionalMaterial.orElse(XMaterial.BARRIER));
+        XMaterial material = optionalMaterial.orElse(XMaterial.BARRIER);
+        this.builder = new ItemBuilder(material);
 
         int quantity = section.getInt("quantity", 1);
         this.builder.withAmount(quantity);
 
-        FreezePlugin plugin = getPlugin();
-        LanguageManager languageManager = plugin.getLanguageManager();
-        MultiVersionHandler multiVersionHandler = plugin.getMultiVersionHandler();
-        ItemHandler itemHandler = multiVersionHandler.getItemHandler();
+        MiniMessage miniMessage = getMiniMessage();
+        ItemHandler itemHandler = getItemHandler();
 
         if (section.isString("display-name")) {
             String displayNameString = section.getString("display-name");
             if (displayNameString != null) {
-                MiniMessage miniMessage = languageManager.getMiniMessage();
                 Component displayName = miniMessage.deserialize(displayNameString);
                 this.builder.withName(itemHandler, ComponentHelper.wrapNoItalics(displayName));
             }
@@ -64,7 +64,6 @@ public final class FakeInventoryItem implements IConfigurable {
         if (section.isList("lore")) {
             List<String> loreStringList = section.getStringList("lore");
             if (!loreStringList.isEmpty()) {
-                MiniMessage miniMessage = languageManager.getMiniMessage();
                 List<Component> loreList = loreStringList.stream().map(miniMessage::deserialize)
                         .collect(Collectors.toList());
                 this.builder.withLore(itemHandler, ComponentHelper.wrapNoItalics(loreList));
@@ -82,11 +81,31 @@ public final class FakeInventoryItem implements IConfigurable {
         }
     }
 
-    private FreezePlugin getPlugin() {
+    private @NotNull FreezePlugin getPlugin() {
         return this.plugin;
     }
 
-    public String getId() {
+    private @NotNull MultiVersionHandler getMultiVersionHandler() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getMultiVersionHandler();
+    }
+
+    private @NotNull ItemHandler getItemHandler() {
+        MultiVersionHandler multiVersionHandler = getMultiVersionHandler();
+        return multiVersionHandler.getItemHandler();
+    }
+
+    private @NotNull LanguageManager getLanguageManager() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getLanguageManager();
+    }
+
+    private @NotNull MiniMessage getMiniMessage() {
+        LanguageManager languageManager = getLanguageManager();
+        return languageManager.getMiniMessage();
+    }
+
+    public @NotNull String getId() {
         return this.id;
     }
 
@@ -98,7 +117,7 @@ public final class FakeInventoryItem implements IConfigurable {
         this.slot = slot;
     }
 
-    public ItemStack getItem() {
+    public @NotNull ItemStack getItem() {
         return this.builder.build();
     }
 }

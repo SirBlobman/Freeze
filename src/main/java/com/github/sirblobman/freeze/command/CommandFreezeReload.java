@@ -1,17 +1,19 @@
 package com.github.sirblobman.freeze.command;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.command.CommandSender;
 
 import com.github.sirblobman.freeze.FreezePlugin;
 
-public final class SubCommandReload extends FreezeCommand {
-    public SubCommandReload(FreezePlugin plugin) {
-        super(plugin, "reload");
+public final class CommandFreezeReload extends FreezeCommand {
+    public CommandFreezeReload(@NotNull FreezePlugin plugin) {
+        super(plugin, "freeze-reload");
         setPermissionName("freeze.command.freeze.reload");
     }
 
     @Override
-    protected boolean execute(CommandSender sender, String[] args) {
+    protected boolean execute(@NotNull CommandSender sender, String @NotNull [] args) {
         FreezePlugin plugin = getFreezePlugin();
         plugin.reloadConfig();
 

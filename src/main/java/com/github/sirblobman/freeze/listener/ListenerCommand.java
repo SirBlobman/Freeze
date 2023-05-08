@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,8 +16,14 @@ import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 
 public final class ListenerCommand extends FreezeListener {
-    public ListenerCommand(FreezePlugin plugin) {
+    public ListenerCommand(@NotNull FreezePlugin plugin) {
         super(plugin);
+    }
+
+    @Override
+    protected boolean isDisabled() {
+        FreezeConfiguration configuration = getConfiguration();
+        return !configuration.isPreventCommands();
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -40,13 +48,7 @@ public final class ListenerCommand extends FreezeListener {
         sendFrozenMessage(player);
     }
 
-    @Override
-    protected boolean isDisabled() {
-        FreezeConfiguration configuration = getConfiguration();
-        return !configuration.isPreventCommands();
-    }
-
-    private String fixCommand(String message) {
+    private @NotNull String fixCommand(@NotNull String message) {
         if (!message.startsWith("/")) {
             message = ("/" + message);
         }
@@ -54,25 +56,25 @@ public final class ListenerCommand extends FreezeListener {
         return message;
     }
 
-    private boolean isBlocked(String command) {
+    private boolean isBlocked(@NotNull String command) {
         FreezeConfiguration configuration = getConfiguration();
-        List<String> blockedCommandList = configuration.getBlockedCommandList();
+        List<String> blockedCommandList = configuration.getBlockedCommands();
         return matchesAny(command, blockedCommandList);
     }
 
-    private boolean isAllowed(String command) {
+    private boolean isAllowed(@NotNull String command) {
         FreezeConfiguration configuration = getConfiguration();
-        List<String> allowedCommandList = configuration.getAllowedCommandList();
+        List<String> allowedCommandList = configuration.getAllowedCommands();
         return matchesAny(command, allowedCommandList);
     }
 
-    private boolean matchesAny(String command, Collection<String> valueList) {
-        if (valueList.contains("*") || valueList.contains("/*")) {
+    private boolean matchesAny(@NotNull String command, @NotNull Collection<String> values) {
+        if (values.contains("*") || values.contains("/*")) {
             return true;
         }
 
         String commandLowerCase = command.toLowerCase(Locale.US);
-        for (String value : valueList) {
+        for (String value : values) {
             String valueLowerCase = value.toLowerCase(Locale.US);
             if (commandLowerCase.equals(valueLowerCase)) {
                 return true;

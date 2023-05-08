@@ -1,5 +1,7 @@
 package com.github.sirblobman.freeze.listener;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,13 +14,8 @@ import com.github.sirblobman.freeze.event.PlayerMeltEvent;
 import com.github.sirblobman.freeze.menu.FakeMenu;
 
 public final class ListenerFakeMenu extends FreezeListener {
-    public ListenerFakeMenu(FreezePlugin plugin) {
+    public ListenerFakeMenu(@NotNull FreezePlugin plugin) {
         super(plugin);
-    }
-
-    private FakeInventoryConfiguration getFakeInventoryConfiguration() {
-        FreezeConfiguration configuration = getConfiguration();
-        return configuration.getFakeInventoryConfiguration();
     }
 
     @Override
@@ -47,5 +44,10 @@ public final class ListenerFakeMenu extends FreezeListener {
         Player player = e.getPlayer();
         FreezePlugin freezePlugin = getPlugin();
         freezePlugin.closeFakeMenu(player);
+    }
+
+    private @NotNull FakeInventoryConfiguration getFakeInventoryConfiguration() {
+        FreezeConfiguration configuration = getConfiguration();
+        return configuration.getFakeInventoryConfiguration();
     }
 }

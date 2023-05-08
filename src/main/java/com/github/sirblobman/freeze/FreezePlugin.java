@@ -2,6 +2,8 @@ package com.github.sirblobman.freeze;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -11,15 +13,17 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.sirblobman.api.bstats.bukkit.Metrics;
-import com.github.sirblobman.api.bstats.charts.SimplePie;
 import com.github.sirblobman.api.configuration.ConfigurationManager;
 import com.github.sirblobman.api.core.CorePlugin;
 import com.github.sirblobman.api.language.Language;
 import com.github.sirblobman.api.language.LanguageManager;
 import com.github.sirblobman.api.plugin.ConfigurablePlugin;
-import com.github.sirblobman.api.update.UpdateManager;
+import com.github.sirblobman.api.update.SpigotUpdateManager;
 import com.github.sirblobman.freeze.command.CommandFreeze;
+import com.github.sirblobman.freeze.command.CommandFreezeAll;
+import com.github.sirblobman.freeze.command.CommandFreezeReload;
+import com.github.sirblobman.freeze.command.CommandMelt;
+import com.github.sirblobman.freeze.command.CommandMeltAll;
 import com.github.sirblobman.freeze.configuration.FreezeConfiguration;
 import com.github.sirblobman.freeze.listener.ListenerBreakAndPlace;
 import com.github.sirblobman.freeze.listener.ListenerCommand;
@@ -29,6 +33,8 @@ import com.github.sirblobman.freeze.listener.ListenerMove;
 import com.github.sirblobman.freeze.listener.ListenerTeleport;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 import com.github.sirblobman.freeze.menu.FakeMenu;
+import com.github.sirblobman.api.shaded.bstats.bukkit.Metrics;
+import com.github.sirblobman.api.shaded.bstats.charts.SimplePie;
 
 public final class FreezePlugin extends ConfigurablePlugin {
     private final FreezeManager freezeManager;
@@ -97,16 +103,20 @@ public final class FreezePlugin extends ConfigurablePlugin {
         }
     }
 
-    public FreezeManager getFreezeManager() {
+    public @NotNull FreezeManager getFreezeManager() {
         return this.freezeManager;
     }
 
-    public FreezeConfiguration getConfiguration() {
+    public @NotNull FreezeConfiguration getConfiguration() {
         return this.configuration;
     }
 
     private void registerCommands() {
         new CommandFreeze(this).register();
+        new CommandFreezeAll(this).register();
+        new CommandFreezeReload(this).register();
+        new CommandMelt(this).register();
+        new CommandMeltAll(this).register();
     }
 
     private void registerListeners() {
@@ -120,7 +130,7 @@ public final class FreezePlugin extends ConfigurablePlugin {
 
     private void registerUpdateChecker() {
         CorePlugin corePlugin = JavaPlugin.getPlugin(CorePlugin.class);
-        UpdateManager updateManager = corePlugin.getUpdateManager();
+        SpigotUpdateManager updateManager = corePlugin.getSpigotUpdateManager();
         updateManager.addResource(this, 31822L);
     }
 
@@ -129,7 +139,7 @@ public final class FreezePlugin extends ConfigurablePlugin {
         metrics.addCustomChart(new SimplePie("selected_language", this::getDefaultLanguageCode));
     }
 
-    private String getDefaultLanguageCode() {
+    private @NotNull String getDefaultLanguageCode() {
         LanguageManager languageManager = getLanguageManager();
         Language defaultLanguage = languageManager.getDefaultLanguage();
         return (defaultLanguage == null ? "none" : defaultLanguage.getLanguageName());

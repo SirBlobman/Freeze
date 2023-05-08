@@ -16,6 +16,12 @@ public final class ListenerTeleport extends FreezeListener {
         super(plugin);
     }
 
+    @Override
+    protected boolean isDisabled() {
+        FreezeConfiguration configuration = getConfiguration();
+        return !configuration.isPreventTeleport();
+    }
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onTeleport(PlayerTeleportEvent e) {
         if (isDisabled()) {
@@ -41,11 +47,5 @@ public final class ListenerTeleport extends FreezeListener {
 
         e.setTo(fromLocation);
         sendFrozenMessage(player);
-    }
-
-    @Override
-    protected boolean isDisabled() {
-        FreezeConfiguration configuration = getConfiguration();
-        return !configuration.isPreventTeleport();
     }
 }

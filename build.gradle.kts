@@ -1,12 +1,37 @@
-val versionBase = property("version.base") as String
-val versionBeta = property("version.beta") as String
-val jenkinsBuildNumber = System.getenv("BUILD_NUMBER") ?: "Unofficial"
+val apiVersion = fetchProperty("version.api", "invalid")
+val coreVersion = fetchProperty("version.core", "invalid")
+val mavenUsername = fetchEnv("MAVEN_DEPLOY_USR", "mavenUsernameSirBlobman", "")
+val mavenPassword = fetchEnv("MAVEN_DEPLOY_PSW", "mavenPasswordSirBlobman", "")
 
-val betaPrefix = if (versionBeta.toBoolean()) "Beta-" else ""
-val pluginVersion = "$versionBase.$betaPrefix$jenkinsBuildNumber"
+val baseVersion = fetchProperty("version.base", "invalid")
+val betaString = fetchProperty("version.beta", "false")
+val jenkinsBuildNumber = fetchEnv("BUILD_NUMBER", null, "Unofficial")
 
-val privateMavenUsername = System.getenv("MAVEN_DEPLOY_USR") ?: property("mavenUsernameSirBlobman")
-val privateMavenPassword = System.getenv("MAVEN_DEPLOY_PSW") ?: property("mavenPasswordSirBlobman")
+val betaBoolean = betaString.toBoolean()
+val betaVersion = if (betaBoolean) "Beta-" else ""
+version = "$baseVersion.$betaVersion$jenkinsBuildNumber"
+
+fun fetchProperty(propertyName: String, defaultValue: String): String {
+    val found = findProperty(propertyName)
+    if (found != null) {
+        return found.toString()
+    }
+
+    return defaultValue
+}
+
+fun fetchEnv(envName: String, propertyName: String?, defaultValue: String): String {
+    val found = System.getenv(envName)
+    if (found != null) {
+        return found
+    }
+
+    if (propertyName != null) {
+        return fetchProperty(propertyName, defaultValue)
+    }
+
+    return defaultValue
+}
 
 plugins {
     id("java")
@@ -23,7 +48,7 @@ repositories {
 dependencies {
     compileOnly("org.jetbrains:annotations:24.0.1")
     compileOnly("org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT")
-    compileOnly("com.github.sirblobman.api:core:2.7-SNAPSHOT")
+    compileOnly("com.github.sirblobman.api:core:$coreVersion")
 }
 
 java {
@@ -37,8 +62,8 @@ publishing {
     repositories {
         maven("https://nexus.sirblobman.xyz/public/") {
             credentials {
-                username = privateMavenUsername as String
-                password = privateMavenPassword as String
+                username = mavenUsername
+                password = mavenPassword
             }
         }
     }
@@ -47,7 +72,6 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.github.sirblobman"
             artifactId = "freeze"
-            version = "2.0.0-SNAPSHOT"
             from(components["java"])
         }
     }
@@ -55,36 +79,39 @@ publishing {
 
 tasks {
     named<Jar>("jar") {
-        archiveFileName.set("Freeze-$pluginVersion.jar")
+        archiveBaseName.set("Freeze")
     }
 
     withType<JavaCompile> {
         options.encoding = "UTF-8"
+        options.compilerArgs.add("-Xlint:deprecation")
+        options.compilerArgs.add("-Xlint:unchecked")
     }
 
     withType<Javadoc> {
         options.encoding = "UTF-8"
-
         val standardOptions = options as StandardJavadocDocletOptions
         standardOptions.addStringOption("Xdoclint:none", "-quiet")
     }
 
     processResources {
-        val pluginName = (findProperty("bukkit.plugin.name") ?: "") as String
-        val pluginPrefix = (findProperty("bukkit.plugin.prefix") ?: "") as String
-        val pluginDescription = (findProperty("bukkit.plugin.description") ?: "") as String
-        val pluginWebsite = (findProperty("bukkit.plugin.website") ?: "") as String
-        val pluginMainClass = (findProperty("bukkit.plugin.main") ?: "") as String
+        val pluginName = fetchProperty("bukkit.plugin.name", "")
+        val pluginPrefix = fetchProperty("bukkit.plugin.prefix", "")
+        val pluginDescription = fetchProperty("bukkit.plugin.description", "")
+        val pluginWebsite = fetchProperty("bukkit.plugin.website", "")
+        val pluginMainClass = fetchProperty("bukkit.plugin.main", "")
 
         filesMatching("plugin.yml") {
-            expand(mapOf(
-                "pluginName" to pluginName,
-                "pluginPrefix" to pluginPrefix,
-                "pluginDescription" to pluginDescription,
-                "pluginWebsite" to pluginWebsite,
-                "pluginMainClass" to pluginMainClass,
-                "pluginVersion" to pluginVersion
-            ))
+            expand(
+                mapOf(
+                    "pluginName" to pluginName,
+                    "pluginPrefix" to pluginPrefix,
+                    "pluginDescription" to pluginDescription,
+                    "pluginWebsite" to pluginWebsite,
+                    "pluginMainClass" to pluginMainClass,
+                    "pluginVersion" to version
+                )
+            )
         }
     }
 }

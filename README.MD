@@ -1,9 +1,14 @@
 # Freeze
 
-A simple plugin that allows you to stop players from moving and executing commands.  
-[Spigot Link](https://www.spigotmc.org/resources/31822/)
+A simple plugin that allows you to stop players from moving and executing commands.
 
-### Freeze API
+## Downloads
+
+[SpigotMC](https://www.spigotmc.org/resources/31822/)
+
+## Freeze API
+
+### Dependency Information
 
 **Maven Repository:**
 
@@ -22,23 +27,21 @@ A simple plugin that allows you to stop players from moving and executing comman
 <dependency>
     <groupId>com.github.sirblobman</groupId>
     <artifactId>freeze</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.4-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
 
-### API Usage
-
-#### Check if a player is frozen:
-
-Make sure that you have Freeze as a dependency and it's installed on the server.
-
-**plugin.yml:**
+**Bukkit plugin.yml:**
 
 ```yaml
-softdepend:
+depend:
   - "Freeze"
 ```
+
+### Check if a player is frozen:
+
+Ensure that you have Freeze as a dependency and that the plugin is installed on the server.
 
 **FreezeHook.java**
 
