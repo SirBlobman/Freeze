@@ -1,58 +1,88 @@
 package com.github.sirblobman.freeze.manager;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
+import java.util.logging.Logger;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.github.sirblobman.api.configuration.PlayerDataManager;
 import com.github.sirblobman.freeze.FreezePlugin;
-import com.github.sirblobman.freeze.event.PlayerFreezeEvent;
-import com.github.sirblobman.freeze.event.PlayerMeltEvent;
 
 public final class FreezeManager {
     private final FreezePlugin plugin;
-    private final Set<UUID> frozenPlayerSet;
 
     public FreezeManager(@NotNull FreezePlugin plugin) {
         this.plugin = plugin;
-        this.frozenPlayerSet = new HashSet<>();
     }
 
-    public @NotNull FreezePlugin getPlugin() {
+    private @NotNull FreezePlugin getPlugin() {
         return this.plugin;
     }
 
-    public void setFrozen(@NotNull Player player, boolean freeze) {
-        UUID playerId = player.getUniqueId();
-        PluginManager pluginManager = Bukkit.getPluginManager();
-        boolean wasFrozen = isFrozen(player);
+    private @NotNull Logger getLogger() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getLogger();
+    }
 
-        if (freeze) {
-            this.frozenPlayerSet.add(playerId);
-            if (!wasFrozen) {
-                PlayerFreezeEvent freezeEvent = new PlayerFreezeEvent(player);
-                pluginManager.callEvent(freezeEvent);
-            }
-        } else {
-            this.frozenPlayerSet.remove(playerId);
-            if (wasFrozen) {
-                PlayerMeltEvent meltEvent = new PlayerMeltEvent(player);
-                pluginManager.callEvent(meltEvent);
-            }
+    private @NotNull PlayerDataManager getPlayerDataManager() {
+        FreezePlugin plugin = getPlugin();
+        return plugin.getPlayerDataManager();
+    }
+
+    public boolean isFrozen(@NotNull OfflinePlayer player) {
+        PlayerDataManager playerDataManager = getPlayerDataManager();
+        if (!playerDataManager.hasData(player)) {
+            return false;
+        }
+
+        YamlConfiguration configuration = playerDataManager.get(player);
+        return configuration.getBoolean("frozen", false);
+    }
+
+    public void setFrozen(@NotNull OfflinePlayer player, boolean frozen) {
+        PlayerDataManager playerDataManager = getPlayerDataManager();
+        if (!frozen && !playerDataManager.hasData(player)) {
+            return;
+        }
+
+        YamlConfiguration configuration = playerDataManager.get(player);
+        configuration.set("frozen", frozen);
+        configuration.set("expire-time", null);
+        playerDataManager.save(player);
+    }
+
+    public @Nullable Instant getExpireTime(@NotNull OfflinePlayer player) {
+        PlayerDataManager playerDataManager = getPlayerDataManager();
+        if (!playerDataManager.hasData(player)) {
+            return null;
+        }
+
+        YamlConfiguration configuration = playerDataManager.get(player);
+        String expireTimeString = configuration.getString("expire-time");
+        if (expireTimeString == null) {
+            return null;
+        }
+
+        try {
+            return Instant.parse(expireTimeString);
+        } catch (DateTimeParseException ex) {
+            Logger logger = getLogger();
+            logger.warning("Failed to parse freeze expire time '" + expireTimeString + "'.");
+            return null;
         }
     }
 
-    public boolean isFrozen(@NotNull Player player) {
-        UUID playerId = player.getUniqueId();
-        return this.frozenPlayerSet.contains(playerId);
-    }
+    public void setExpireTime(@NotNull OfflinePlayer player, @NotNull Instant time) {
+        PlayerDataManager playerDataManager = getPlayerDataManager();
+        YamlConfiguration configuration = playerDataManager.get(player);
+        String expireTimeString = time.toString();
 
-    public void removeAll() {
-        this.frozenPlayerSet.clear();
+        configuration.set("expire-time", expireTimeString);
+        playerDataManager.save(player);
     }
 }

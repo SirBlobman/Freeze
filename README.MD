@@ -2,6 +2,12 @@
 
 A simple plugin that allows you to stop players from moving and executing commands.
 
+## Requirements
+
+- Java 17
+- [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/downloads/paper), or [Folia](https://papermc.io/software/folia) 1.8.8-1.19.4
+- [BlueSlimeCore](https://hangar.papermc.io/SirBlobman/BlueSlimeCore)
+
 ## Downloads
 
 [SpigotMC](https://www.spigotmc.org/resources/31822/)

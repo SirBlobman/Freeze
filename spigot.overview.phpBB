@@ -22,7 +22,7 @@ Frozen players cannot move, teleport, or execute commands.
 
 [SIZE=5][COLOR=#FF0000][B]Commands:[/B][/COLOR][/SIZE]
 [LIST]
-[*][B]/freeze <player>[/B]: Freeze a single, online player.
+[*][B]/freeze <player> [time][/B]: Freeze a single, online player.
 [*][B]/freeze-all[/B]: Freeze all players on the server.
 [*][B]/freeze-reload[/B]: Reload the configuration files.
 [*][B]/melt <player>[/B]: Unfreeze a single, online player.

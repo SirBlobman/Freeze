@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
@@ -35,6 +34,7 @@ import com.github.sirblobman.freeze.listener.ListenerMove;
 import com.github.sirblobman.freeze.listener.ListenerTeleport;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 import com.github.sirblobman.freeze.menu.FakeMenu;
+import com.github.sirblobman.freeze.task.MeltTask;
 import com.github.sirblobman.api.shaded.bstats.bukkit.Metrics;
 import com.github.sirblobman.api.shaded.bstats.charts.SimplePie;
 
@@ -65,6 +65,7 @@ public final class FreezePlugin extends ConfigurablePlugin {
 
         registerCommands();
         registerListeners();
+        registerTasks();
 
         registerUpdateChecker();
         register_bStats();
@@ -72,11 +73,6 @@ public final class FreezePlugin extends ConfigurablePlugin {
 
     @Override
     public void onDisable() {
-        HandlerList.unregisterAll(this);
-
-        FreezeManager freezeManager = getFreezeManager();
-        freezeManager.removeAll();
-
         Collection<? extends Player> playerCollection = Bukkit.getOnlinePlayers();
         for (Player player : playerCollection) {
             closeFakeMenu(player);
@@ -130,6 +126,10 @@ public final class FreezePlugin extends ConfigurablePlugin {
         new ListenerFakeMenu(this).register();
         new ListenerItemDropping(this).register();
         new ListenerItemMoving(this).register();
+    }
+
+    private void registerTasks() {
+        new MeltTask(this).register();
     }
 
     private void registerUpdateChecker() {
