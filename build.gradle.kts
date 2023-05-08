@@ -72,6 +72,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.github.sirblobman"
             artifactId = "freeze"
+            version = apiVersion
             from(components["java"])
         }
     }
