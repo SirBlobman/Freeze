@@ -33,7 +33,7 @@ A simple plugin that allows you to stop players from moving and executing comman
 <dependency>
     <groupId>com.github.sirblobman</groupId>
     <artifactId>freeze</artifactId>
-    <version>2.4-SNAPSHOT</version>
+    <version>2.5-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -73,3 +73,10 @@ public final class FreezeHook {
     }
 }
 ```
+
+### Events
+
+There are two events you can use from this plugin:
+
+- `com.github.sirblobman.freeze.event.PlayerFreezeEvent`
+- `com.github.sirblobman.freeze.event.PlayerMeltEvent`
