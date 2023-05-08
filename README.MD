@@ -1,6 +1,6 @@
 # Freeze
 
-A simple plugin that allows you to stop players from moving and executing commands.
+A moderation plugin that prevents players from moving and doing certain actions.
 
 ## Requirements
 

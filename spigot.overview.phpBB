@@ -6,8 +6,7 @@ This plugin requires Java 17. Minecraft versions 1.18 and higher use Java 17 nat
 Older versions of the game may work, but you will not receive support for them.
 
 [SIZE=5][COLOR=#FF0000][B]Description:[/B][/COLOR][/SIZE]
-A simple plugin that allows you to freeze players.
-Frozen players cannot move, teleport, or execute commands.
+A moderation plugin that prevents players from moving and doing certain actions.
 
 [SIZE=5][COLOR=#FF0000][B]Dependencies:[/B][/COLOR][/SIZE]
 [LIST]
@@ -17,10 +16,9 @@ Frozen players cannot move, teleport, or execute commands.
 [SIZE=5][COLOR=#FF0000][B]Features:[/B][/COLOR][/SIZE]
 [LIST]
 [*]A command to freeze one player.
+[*]Support for automatic freeze expiration.
 [*]A command to freeze all players currently on the server.
-[*]Configuration option to prevent players from moving while frozen.
-[*]Configuration option to prevent players from teleporting while frozen.
-[*]Configuration option to prevent players from executing commands while frozen.
+[*]Configuration options for preventing players from doing different actions while frozen.
 [*]Configurable fake inventory / GUI.
 [/LIST]
 
