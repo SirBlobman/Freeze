@@ -37,7 +37,7 @@ A moderation plugin that prevents players from moving and doing certain actions.
 [*][B]freeze.command.freeze[/B]: Access the '/freeze' command.
 [*][B]freeze.command.freeze.reload[/B]: Access the '/freeze-reload' command.
 [*][B]freeze.command.freeze.all[/B]: Access the '/freeze-all' command.
-[*][B]freeze.command.melt/B]: Access the '/melt' command.
+[*][B]freeze.command.melt[/B]: Access the '/melt' command.
 [*][B]freeze.command.melt.all[/B]: Access the '/melt-all' command.
 [/LIST]
 
@@ -48,4 +48,4 @@ You can also join if you have feature requests or if you just want to chat with 
 
 [SIZE=5][B][COLOR=#FF0000]Extra Information:[/COLOR][/B][/SIZE]
 Please do not use a review to leave bug reports or errors.
-I am not able to help you through a review.
+I am not able to help you through a review.[/b]
