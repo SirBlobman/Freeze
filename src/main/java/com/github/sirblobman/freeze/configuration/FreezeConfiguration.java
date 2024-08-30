@@ -21,6 +21,7 @@ public final class FreezeConfiguration implements IConfigurable {
     private boolean preventAttacking;
     private boolean preventItemDropping;
     private boolean preventItemMoving;
+    private boolean usePowderedSnowEffect;
 
     private final List<String> blockedCommandList;
     private final List<String> allowedCommandList;
@@ -35,6 +36,7 @@ public final class FreezeConfiguration implements IConfigurable {
         this.preventAttacking = true;
         this.preventItemDropping = true;
         this.preventItemMoving = true;
+        this.usePowderedSnowEffect = true;
 
         this.blockedCommandList = new ArrayList<>();
         this.allowedCommandList = new ArrayList<>();
@@ -50,6 +52,7 @@ public final class FreezeConfiguration implements IConfigurable {
         setPreventBlockActions(config.getBoolean("prevent-block-break-and-place", true));
         setPreventDamage(config.getBoolean("prevent-damage", true));
         setPreventAttacking(config.getBoolean("prevent-attacking", true));
+        setUsePowderedSnowEffect(config.getBoolean("use-powdered-snow-effect", true));
 
         setBlockedCommands(config.getStringList("blocked-command-list"));
         setAllowedCommands(config.getStringList("allowed-command-list"));
@@ -144,4 +147,12 @@ public final class FreezeConfiguration implements IConfigurable {
     public void setPreventItemMoving(boolean preventItemMoving) {
         this.preventItemMoving = preventItemMoving;
     }
+
+  public boolean isUsePowderedSnowEffect() {
+    return this.usePowderedSnowEffect;
+  }
+
+  public void setUsePowderedSnowEffect(boolean usePowderedSnowEffect) {
+    this.usePowderedSnowEffect = usePowderedSnowEffect;
+  }
 }

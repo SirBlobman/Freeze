@@ -31,6 +31,7 @@ import com.github.sirblobman.freeze.listener.ListenerFakeMenu;
 import com.github.sirblobman.freeze.listener.ListenerItemDropping;
 import com.github.sirblobman.freeze.listener.ListenerItemMoving;
 import com.github.sirblobman.freeze.listener.ListenerMove;
+import com.github.sirblobman.freeze.listener.ListenerPowderedSnowEffect;
 import com.github.sirblobman.freeze.listener.ListenerTeleport;
 import com.github.sirblobman.freeze.manager.FreezeManager;
 import com.github.sirblobman.freeze.menu.FakeMenu;
@@ -126,6 +127,7 @@ public final class FreezePlugin extends ConfigurablePlugin {
         new ListenerFakeMenu(this).register();
         new ListenerItemDropping(this).register();
         new ListenerItemMoving(this).register();
+        new ListenerPowderedSnowEffect(this).register();
     }
 
     private void registerTasks() {

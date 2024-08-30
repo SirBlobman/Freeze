@@ -23,6 +23,10 @@ prevent-item-dropping: true
 # This option may not work on player inventories.
 prevent-item-movement: true
 
+# Should players be shown a frozen effect on their screen?
+# This is similar to being stuck in powdered snow.
+use-powdered-snow-effect: true
+
 # This is a list of commands that will be prevented
 # This list uses the String.startsWith method
 # This means that blocking '/tp' will also block '/tpa' and '/tpo'
