@@ -4,8 +4,8 @@ A moderation plugin that prevents players from moving and doing certain actions.
 
 ## Requirements
 
-- Java 17
-- [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/downloads/paper), or [Folia](https://papermc.io/software/folia) 1.8.8-1.19.4
+- Java 21
+- [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/downloads/paper), or [Folia](https://papermc.io/software/folia) 1.8.8-1.21.3
 - [BlueSlimeCore](https://hangar.papermc.io/SirBlobman/BlueSlimeCore)
 
 ## Downloads
