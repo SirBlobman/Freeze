@@ -1,5 +1,4 @@
 val apiVersion = fetchProperty("version.api", "invalid")
-val coreVersion = fetchProperty("version.core", "invalid")
 val mavenUsername = fetchEnv("MAVEN_DEPLOY_USR", "mavenUsernameSirBlobman", "")
 val mavenPassword = fetchEnv("MAVEN_DEPLOY_PSW", "mavenPasswordSirBlobman", "")
 
@@ -46,16 +45,15 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.jetbrains:annotations:26.0.1")
-    compileOnly("org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT")
-    compileOnly("com.github.sirblobman.api:core:$coreVersion")
+    compileOnly("org.jetbrains:annotations:26.0.2")
+    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("com.github.sirblobman.api:core:2.9-SNAPSHOT")
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-
     withSourcesJar()
     withJavadocJar()
 }
