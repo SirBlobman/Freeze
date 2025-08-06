@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.github.sirblobman.api.configuration.IConfigurable;
+import com.github.sirblobman.api.utility.VersionUtility;
 import com.github.sirblobman.freeze.FreezePlugin;
 
 public final class FreezeConfiguration implements IConfigurable {
@@ -148,11 +149,16 @@ public final class FreezeConfiguration implements IConfigurable {
         this.preventItemMoving = preventItemMoving;
     }
 
-  public boolean isUsePowderedSnowEffect() {
-    return this.usePowderedSnowEffect;
-  }
+    public boolean isUsePowderedSnowEffect() {
+        int minorVersion = VersionUtility.getMinorVersion();
+        if (minorVersion < 17) {
+            return false;
+        }
 
-  public void setUsePowderedSnowEffect(boolean usePowderedSnowEffect) {
-    this.usePowderedSnowEffect = usePowderedSnowEffect;
-  }
+        return this.usePowderedSnowEffect;
+    }
+
+    public void setUsePowderedSnowEffect(boolean usePowderedSnowEffect) {
+        this.usePowderedSnowEffect = usePowderedSnowEffect;
+    }
 }

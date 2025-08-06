@@ -1,5 +1,6 @@
 package com.github.sirblobman.freeze;
 
+import java.lang.reflect.Method;
 import java.util.Collection;
 
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +10,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.sirblobman.api.configuration.ConfigurationManager;
@@ -94,11 +94,22 @@ public final class FreezePlugin extends ConfigurablePlugin {
     }
 
     public void closeFakeMenu(Player player) {
-        InventoryView openInventory = player.getOpenInventory();
-        Inventory topInventory = openInventory.getTopInventory();
-        InventoryHolder holder = topInventory.getHolder();
-        if (holder instanceof FakeMenu) {
-            player.closeInventory();
+        try {
+            Class<?> class_InventoryView = Class.forName("org.bukkit.inventory.InventoryView");
+            Method method_getTopInventory = class_InventoryView.getMethod("getTopInventory");
+
+            Object openInventory = player.getOpenInventory();
+            Inventory topInventory = (Inventory) method_getTopInventory.invoke(openInventory);
+            if (topInventory == null) {
+                return;
+            }
+
+            InventoryHolder holder = topInventory.getHolder();
+            if (holder instanceof FakeMenu) {
+                player.closeInventory();
+            }
+        } catch (ReflectiveOperationException ex) {
+            throw new IllegalStateException("Unexpected Reflection Error:", ex);
         }
     }
 
