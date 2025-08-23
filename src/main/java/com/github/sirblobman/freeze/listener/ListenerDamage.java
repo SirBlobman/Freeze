@@ -25,14 +25,12 @@ public final class ListenerDamage extends FreezeListener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onDamage(EntityDamageByEntityEvent e) {
         Entity damaged = e.getEntity();
-        if (damaged instanceof Player) {
-            Player player = (Player) damaged;
+        if (damaged instanceof Player player) {
             checkEvent(player, e);
         }
 
         Entity damager = e.getDamager();
-        if (damager instanceof Player) {
-            Player player = (Player) damager;
+        if (damager instanceof Player player) {
             checkEvent(player, e, isDisabled2());
         }
     }

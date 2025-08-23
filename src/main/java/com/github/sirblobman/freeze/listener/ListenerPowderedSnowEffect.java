@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 
-import com.github.sirblobman.api.folia.details.EntityTaskDetails;
 import com.github.sirblobman.api.folia.scheduler.TaskScheduler;
 import com.github.sirblobman.freeze.FreezePlugin;
 import com.github.sirblobman.freeze.event.PlayerFreezeEvent;
