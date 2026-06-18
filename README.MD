@@ -4,9 +4,8 @@ A moderation plugin that prevents players from moving and doing certain actions.
 
 ## Requirements
 
-- Java 21
-- [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/downloads/paper), or [Folia](https://papermc.io/software/folia) 1.21.8
-- [BlueSlimeCore](https://hangar.papermc.io/SirBlobman/BlueSlimeCore)
+- Java 25
+- [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/downloads/paper), or [Folia](https://papermc.io/software/folia) 26.1.2 or higher.
 
 ## Downloads
 
@@ -33,7 +32,7 @@ A moderation plugin that prevents players from moving and doing certain actions.
 <dependency>
     <groupId>com.github.sirblobman</groupId>
     <artifactId>freeze</artifactId>
-    <version>2.5-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```

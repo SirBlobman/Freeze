@@ -45,15 +45,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.jetbrains:annotations:26.0.2")
-    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT")
-    compileOnly("com.github.sirblobman.api:core:2.9-SNAPSHOT")
+    compileOnly("org.jetbrains:annotations:26.1.0")
+    compileOnly("org.spigotmc:spigot-api:26.1.2-R0.1-SNAPSHOT")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
     withSourcesJar()
     withJavadocJar()
 }

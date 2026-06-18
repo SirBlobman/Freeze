@@ -15,7 +15,7 @@ pipeline {
     }
 
     tools {
-        jdk "JDK 21"
+        jdk "JDK 25"
     }
 
     stages {
