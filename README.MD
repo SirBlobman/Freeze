@@ -37,11 +37,15 @@ A moderation plugin that prevents players from moving and doing certain actions.
 </dependency>
 ```
 
-**Bukkit plugin.yml:**
+**Paper paper-plugin.yml:**
 
 ```yaml
-depend:
-  - "Freeze"
+dependencies:
+  server:
+    Freeze:
+      load: BEFORE
+      required: true
+      join-classpath: true
 ```
 
 ### Check if a player is frozen:
@@ -57,7 +61,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.sirblobman.freeze.FreezePlugin;
-import com.github.sirblobman.freeze.manager.FreezeManager;
+import com.github.sirblobman.freeze.FreezeManager;
 
 public final class FreezeHook {
     public static boolean isEnabled() {
