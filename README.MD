@@ -5,7 +5,7 @@ A moderation plugin that prevents players from moving and doing certain actions.
 ## Requirements
 
 - Java 25
-- [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/downloads/paper), or [Folia](https://papermc.io/software/folia) 26.1.2 or higher.
+- [Paper](https://papermc.io/downloads/paper) or [Folia](https://papermc.io/software/folia) 26.1.2 or higher.
 
 ## Downloads
 

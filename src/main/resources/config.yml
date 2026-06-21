@@ -86,7 +86,3 @@ fake-inventory:
 
       # Make the item glow (hidden enchantment)
       glowing: false
-
-      # Custom Model Data is optional, but can be used if you have a custom texture pack.
-      # Custom Model Data requires Spigot 1.14.4 or higher.
-      # custom-model-data: 0
