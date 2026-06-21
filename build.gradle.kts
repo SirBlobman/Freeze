@@ -108,7 +108,7 @@ tasks {
         val pluginVersion = providers.provider { project.version.toString() }
         inputs.property("version", pluginVersion)
 
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(mapOf("version" to pluginVersion.get()))
         }
     }

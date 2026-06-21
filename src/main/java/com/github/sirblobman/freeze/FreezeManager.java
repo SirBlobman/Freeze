@@ -65,4 +65,8 @@ public final class FreezeManager {
         PlayerMeltEvent event = new PlayerMeltEvent(player);
         getPlugin().getServer().getPluginManager().callEvent(event);
     }
+
+    public boolean isImmune(@NotNull Player player) {
+        return player.hasPermission("freeze.immune");
+    }
 }

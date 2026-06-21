@@ -1,4 +1,4 @@
-package com.github.sirblobman.freeze;
+package com.github.sirblobman.freeze.configuration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 
-import com.github.sirblobman.freeze.menu.FakeInventoryConfiguration;
+import com.github.sirblobman.freeze.FreezePlugin;
 
 public final class FreezeConfiguration {
     private final FreezePlugin plugin;

@@ -2,7 +2,6 @@ package com.github.sirblobman.freeze.menu;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -12,9 +11,9 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MenuType;
 
-import com.github.sirblobman.freeze.FreezeConfiguration;
+import com.github.sirblobman.freeze.configuration.FakeInventoryConfiguration;
+import com.github.sirblobman.freeze.configuration.FakeItemConfiguration;
 import com.github.sirblobman.freeze.FreezePlugin;
 
 import net.kyori.adventure.text.Component;

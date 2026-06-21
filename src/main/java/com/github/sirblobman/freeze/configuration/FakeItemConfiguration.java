@@ -1,4 +1,4 @@
-package com.github.sirblobman.freeze.menu;
+package com.github.sirblobman.freeze.configuration;
 
 import java.util.ArrayList;
 import java.util.Collections;
