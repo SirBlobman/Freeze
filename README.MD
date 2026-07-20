@@ -9,7 +9,7 @@ A moderation plugin that prevents players from moving and doing certain actions.
 
 ## Downloads
 
-[SpigotMC](https://www.spigotmc.org/resources/31822/)
+[HangarMC](https://hangar.papermc.io/SirBlobman/Freeze)
 
 ## Freeze API
 
