@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 val apiVersion = fetchProperty("version.api", "invalid")
-val mavenUsername = fetchEnv("MAVEN_DEPLOY_USR", "mavenUsernameSirBlobman", "")
-val mavenPassword = fetchEnv("MAVEN_DEPLOY_PSW", "mavenPasswordSirBlobman", "")
+val mavenUsername = fetchEnv("MAVEN_DEPLOY_USR", "maven.username.sirblobman", "")
+val mavenPassword = fetchEnv("MAVEN_DEPLOY_PSW", "maven.password.sirblobman", "")
 
 val baseVersion = fetchProperty("version.base", "invalid")
 val betaString = fetchProperty("version.beta", "false")
@@ -76,7 +76,7 @@ publishing {
             groupId = "com.github.sirblobman"
             artifactId = "freeze"
             version = apiVersion
-            from(components["java"])
+            from(components["shadow"])
         }
     }
 }
